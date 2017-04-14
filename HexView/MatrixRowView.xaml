@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="HexView.MatrixRowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyNamespace"
+             xmlns:my="clr-namespace:HexView"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=local:MatrixRow}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!--<ListView ItemsSource="{Binding Cells}">
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <my:MatrixCellView DataContext="{Binding}"/>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>-->
+    <!--<ItemsControl ItemsSource="{Binding Cells}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                    <TextBox Margin="2" FontFamily="Consolas" Text="{Binding MyValue}"/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>-->
+    <ListBox ItemsSource="{Binding Cells}">
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Columns="16"/>
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel>
+                    <TextBlock FontFamily="Consolas" Text="{Binding MyValue}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</UserControl>

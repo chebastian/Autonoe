@@ -12,7 +12,7 @@ namespace HexView
 {
     public class HexMatrixViewModel : ViewModelBase, ICellProvider
     {
-        private ObservableCollection<MatrixCell> _matrix;
+        private ObservableCollection<MatrixRow> _matrix;
         private Dictionary<byte, String> tokens = new Dictionary<byte, string>();
         private byte[] bytes;
         private FileStream _stream;
@@ -26,8 +26,7 @@ namespace HexView
         public HexMatrixViewModel(byte[] bytes)
         {
             this.bytes = bytes;
-            init();
-
+            init(); 
             loadBytes(bytes);
         }
 
@@ -36,13 +35,17 @@ namespace HexView
             init();
             _stream = stream;
 
-            for (var i = 0; i < stream.Length; i++)
-                Matrix.Add(new CellProxy(this, i));
+            //for (var i = 0; i < stream.Length; i += 16)
+            for (var i = 0; i < stream.Length/16; i++)
+                Matrix.Add(new MatrixRow(this,i,16));
+
+                //Matrix.Add(new CellProxy(this, i));
+            //Matrix.Add(new MatrixRow())
         }
 
         public void init()
         {
-            _matrix = new ObservableCollection<MatrixCell>();
+            _matrix = new ObservableCollection<MatrixRow>();
 
             foreach (var i in Enumerable.Range(0, 256))
             {
@@ -53,11 +56,11 @@ namespace HexView
         private void loadBytes(byte[] arr)
         {
             var rows = bytes.Length / 16;
-            for (var i = 0; i < bytes.Length; i++)
+
+            for (var i = 0; i < bytes.Length; i+= 16)
             {
                 var thevalue = tokens[bytes[i]];
-                //Matrix.Add(new MatrixCell() { MyValue = thevalue });
-                Matrix.Add(new CellProxy(this,i));
+                //Matrix.Add(new CellProxy(this,i));
             } 
         }
 
@@ -83,7 +86,7 @@ namespace HexView
             return Enumerable.Repeat<byte>(10, length).ToArray();
         }
 
-        public ObservableCollection<MatrixCell> Matrix
+        public ObservableCollection<MatrixRow> Matrix
         {
             get
             {

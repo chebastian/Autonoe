@@ -13,8 +13,8 @@
         <ListView ItemsSource="{Binding Matrix}" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Standard">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding MyValue}"/>
-                </DataTemplate>
+                    <lo:MatrixRowView />
+                </DataTemplate> 
             </ListView.ItemTemplate>
         </ListView>
     </DockPanel>
