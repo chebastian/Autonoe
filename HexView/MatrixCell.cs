@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyNamespace
+namespace HexView
 {
 
     public class MatrixRow : MVVMHelpers.ViewModelBase

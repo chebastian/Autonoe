@@ -1,5 +1,4 @@
 ﻿using MVVMHelpers;
-using MyNamespace;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -78,7 +77,6 @@ namespace HexView
 
         public byte[] ReadCellValues(int offset, int length)
         {
-            var s = $"this is {this.tokens[200]}";
             if(_stream != null)
             {
                 byte[] arr = new byte[_stream.Length];

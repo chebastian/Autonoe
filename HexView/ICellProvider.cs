@@ -1,4 +1,4 @@
-﻿namespace MyNamespace
+﻿namespace HexView
 {
     public interface ICellProvider
     {
