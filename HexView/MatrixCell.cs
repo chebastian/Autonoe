@@ -29,7 +29,7 @@ namespace MyNamespace
             Cells = new ObservableCollection<MatrixCell>();
 
             for (var i = 0; i < rowsz; i++)
-                Cells.Add(new CellProxy(provider, row + i));
+                Cells.Add(new CellProxy(provider, (row * rowsz) + i));
 
         }
 
@@ -42,10 +42,17 @@ namespace MyNamespace
     public class MatrixCell  : MVVMHelpers.ViewModelBase
     {
         protected string _val;
+        private bool _highlight;
 
         public virtual String GetMyValue()
         {
             return _val;
+        }
+
+        public bool IsHighlighted
+        {
+            get => _highlight;
+            set => _highlight = value;
         }
 
         public String MyValue

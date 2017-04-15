@@ -32,16 +32,16 @@
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
     </ItemsControl>-->
-    <ListBox ItemsSource="{Binding Cells}">
+    <ListBox ItemsSource="{Binding Cells}" SelectionMode="Multiple">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="16"/>
+                <UniformGrid Columns="16" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <StackPanel>
-                    <TextBlock FontFamily="Consolas" Text="{Binding MyValue}"/>
+                    <TextBlock Background="{Binding }" FontFamily="Consolas" Text="{Binding MyValue}"/>
                 </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>

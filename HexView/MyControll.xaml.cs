@@ -28,9 +28,12 @@ namespace HexView
     {
         private ObservableCollection<MatrixCell> _matrix;
 
+        public String test => "Hej " + "d[ ";
+
         public MyControll()
         {
             InitializeComponent();
+            var d = test;
 
             //var bytes = File.ReadAllBytes("./test.jpg");
             var reader = File.OpenRead("./test.jpg");

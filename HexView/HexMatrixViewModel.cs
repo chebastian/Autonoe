@@ -69,14 +69,16 @@ namespace HexView
             if(_stream != null)
             {
                 byte[] arr = new byte[_stream.Length];
-                _stream.Read(arr, offset, 1);
-                return arr[offset];
+                _stream.Seek(offset, SeekOrigin.Begin);
+                return (byte)_stream.ReadByte();
+                //return arr[offset];
             }
             return 10; 
         }
 
         public byte[] ReadCellValues(int offset, int length)
         {
+            var s = $"this is {this.tokens[200]}";
             if(_stream != null)
             {
                 byte[] arr = new byte[_stream.Length];
