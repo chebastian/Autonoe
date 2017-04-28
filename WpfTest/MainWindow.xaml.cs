@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HexView.Model;
+using HexView.Viewmodel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,11 @@ namespace WpfTest
         public MainWindow()
         {
             InitializeComponent();
+            var node = new TreeNode() { Name = "hest " };
+            node.Children.Add(new TreeNode() { Name = "Child" });
+            node.Children.Add(new TreeNode() { Name = "Child" });
+
+            Tree.DataContext = new TreeNodeViewModel(node);
         }
     }
 }

@@ -32,8 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Design.Interaction, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
+    <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -48,46 +58,66 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HexMatrixViewModel.cs" />
-    <Compile Include="ICellProvider.cs" />
-    <Compile Include="MatrixCellView.xaml.cs">
+    <Compile Include="Events\EvtMgr.cs" />
+    <Compile Include="Model\CellSelectedEvent.cs" />
+    <Compile Include="Model\ObservableValue.cs" />
+    <Compile Include="Model\TreeNode.cs" />
+    <Compile Include="Viewmodel\HexMatrixViewModel.cs" />
+    <Compile Include="Interface\ICellProvider.cs" />
+    <Compile Include="Interface\IEventSubscriber.cs" />
+    <Compile Include="Viewmodel\TreeNodeViewModel.cs" />
+    <Compile Include="View\MatrixCellView.xaml.cs">
       <DependentUpon>MatrixCellView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MatrixRowView.xaml.cs">
+    <Compile Include="View\MatrixRowView.xaml.cs">
       <DependentUpon>MatrixRowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MatrixView.xaml.cs">
+    <Compile Include="View\MatrixView.xaml.cs">
       <DependentUpon>MatrixView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test.xaml.cs">
+    <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
-    <Page Include="MatrixCellView.xaml">
+    <Compile Include="View\TreeView.xaml.cs">
+      <DependentUpon>TreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TreeViewLeafView.xaml.cs">
+      <DependentUpon>TreeViewLeafView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\MatrixCellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MatrixRowView.xaml">
+    <Page Include="View\MatrixRowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MatrixView.xaml">
+    <Page Include="View\MatrixView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyControll.xaml">
+    <Page Include="View\MyControll.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="MatrixCell.cs" />
-    <Compile Include="Mediator.cs" />
-    <Compile Include="ModelViewBase.cs" />
-    <Compile Include="MultiDictionary.cs" />
-    <Compile Include="MyCommandWrapper.cs" />
-    <Compile Include="MyControll.xaml.cs">
+    <Compile Include="Model\MatrixCell.cs" />
+    <Compile Include="Utils\Mediator.cs" />
+    <Compile Include="Viewmodel\ModelViewBase.cs" />
+    <Compile Include="Utils\MultiDictionary.cs" />
+    <Compile Include="Utils\MyCommandWrapper.cs" />
+    <Compile Include="View\MyControll.xaml.cs">
       <DependentUpon>MyControll.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Test.xaml">
+    <Page Include="View\Test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TreeViewLeafView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,6 +140,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

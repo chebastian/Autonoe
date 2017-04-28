@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.12
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTest", "WpfTest\WpfTest.csproj", "{722273C7-7544-41DB-9D87-92C36B754D4F}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsLan", "UnitTestsLan\UnitTestsLan.csproj", "{D78E5470-3CAA-4D8B-9CF6-9E829ED1F9A1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLang", "XLang\XLang.csproj", "{07CDF4C0-33F8-4639-9920-ED8736FD95C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMCore", "MVVMCore\MVVMCore.csproj", "{10563FAF-5C2F-46AA-B451-93BD5AD59769}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{07CDF4C0-33F8-4639-9920-ED8736FD95C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07CDF4C0-33F8-4639-9920-ED8736FD95C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07CDF4C0-33F8-4639-9920-ED8736FD95C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10563FAF-5C2F-46AA-B451-93BD5AD59769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10563FAF-5C2F-46AA-B451-93BD5AD59769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10563FAF-5C2F-46AA-B451-93BD5AD59769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10563FAF-5C2F-46AA-B451-93BD5AD59769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         xmlns:ss="clr-namespace:HexView;assembly=HexView"
+        xmlns:views="clr-namespace:HexView.View;assembly=HexView"
         mc:Ignorable="d" 
         Title="MainWindow" Height="350" Width="525">
     <Grid>
@@ -15,6 +16,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ss:MyControll Grid.Column="1"/>
+        <ss:MatrixView Grid.Column="0"/>
+        <views:TreeView Name="Tree" Grid.Column="1" Padding="15"/>
     </Grid>
 </Window>
