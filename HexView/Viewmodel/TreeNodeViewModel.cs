@@ -24,8 +24,8 @@ namespace HexView.Viewmodel
                 ChildViews.Add(new TreeNodeViewModel(child));
         }
 
-        private ITreeNode selectedNode; 
-        public ITreeNode NodeSelected { get => selectedNode; set { selectedNode = value; SetPropertyChanged(); } }
+        private TreeNodeViewModel selectedNode; 
+        public TreeNodeViewModel NodeSelected { get => selectedNode; set { selectedNode = value; SetPropertyChanged(); } }
 
         private ITreeNode node;
         public ITreeNode Node { get => node; set { node = value; SetSelectedNode(node); SetPropertyChanged(); } }
@@ -42,12 +42,13 @@ namespace HexView.Viewmodel
 
         public ICommand Click
         {
-            get => new MyCommandWrapper(x => DoClick());
+            get => new MyCommandWrapper(x => DoClick(x as TreeNodeViewModel));
         }
 
-        private void DoClick()
-        { 
-            //Node = SelectedNode;
+        private void DoClick(TreeNodeViewModel node)
+        {
+            node.Node.Name = "this is me";
+            Node = node.Node;
         }
 
         public ObservableCollection<TreeNodeViewModel> ChildViews

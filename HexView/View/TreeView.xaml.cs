@@ -23,6 +23,6 @@ namespace HexView.View
         public TreeView()
         {
             InitializeComponent();
-        }
+        } 
     }
 }

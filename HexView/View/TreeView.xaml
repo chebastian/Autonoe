@@ -29,9 +29,9 @@
                    HorizontalAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding Path=DataContext.Click, 
+                    <Button Command="{Binding Path=DataContext.Click,
                             RelativeSource={RelativeSource Mode=FindAncestor, 
-                            AncestorType={x:Type UserControl}}}">
+                            AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <TextBlock Text="{Binding Node.Name}"/> 
