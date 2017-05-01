@@ -4,12 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HexView.View"
+             xmlns:vm="clr-namespace:HexView.Viewmodel"
+             xmlns:conv="clr-namespace:HexView.Utils.Converters"
+             xmlns:model="clr-namespace:HexView.Model"
              VerticalAlignment="Stretch"
              HorizontalAlignment="Stretch"
              mc:Ignorable="d" 
-             Background="HotPink"
+             Background="Aqua"
+             d:DataContext="{d:DesignInstance Type=model:TreeNode}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel LastChildFill="True">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <conv:BoolToColorConverter x:Key="boolToColor"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True"
+             Background="{Binding HasChildren, 
+             Converter={StaticResource boolToColor}}" >
         <Label Content="{Binding Node.Name}" />
         <!--<ListView ItemsSource="{Binding ChildViews}">
             <ListView.ItemTemplate>

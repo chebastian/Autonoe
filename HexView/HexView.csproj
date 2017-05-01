@@ -62,6 +62,7 @@
     <Compile Include="Model\CellSelectedEvent.cs" />
     <Compile Include="Model\ObservableValue.cs" />
     <Compile Include="Model\TreeNode.cs" />
+    <Compile Include="Utils\Converters\BoolToColorConverter.cs" />
     <Compile Include="Viewmodel\HexMatrixViewModel.cs" />
     <Compile Include="Interface\ICellProvider.cs" />
     <Compile Include="Interface\IEventSubscriber.cs" />
@@ -77,6 +78,9 @@
     </Compile>
     <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TreeNodeChildView.xaml.cs">
+      <DependentUpon>TreeNodeChildView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TreeView.xaml.cs">
       <DependentUpon>TreeView.xaml</DependentUpon>
@@ -110,6 +114,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\Test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TreeNodeChildView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

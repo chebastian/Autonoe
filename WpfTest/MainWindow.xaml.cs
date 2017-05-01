@@ -25,9 +25,17 @@ namespace WpfTest
         public MainWindow()
         {
             InitializeComponent();
-            var node = new TreeNode() { Name = "hest " };
-            node.Children.Add(new TreeNode() { Name = "Child" });
-            node.Children.Add(new TreeNode() { Name = "Child" });
+
+            //var node = new FileTreeNode(@"C:\totalcmd");
+            var node = new FileTreeNode(@"C:\GOG Games");
+
+            //var node = new TreeNode() { Name = "hest " };
+            //node.Children.Add(new TreeNode() { Name = "Child" });
+
+            //var second = new TreeNode() { Name = "Second Child" }; 
+            //second.Children.Add(new TreeNode() { Name = "grandchild" });
+
+            //node.Children.Add(second);
 
             Tree.DataContext = new TreeNodeViewModel(node);
         }

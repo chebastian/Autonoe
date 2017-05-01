@@ -18,6 +18,7 @@
             <ResourceDictionary>
             </ResourceDictionary>
         </StackPanel.Resources>
+        <Button Content="Previous" Padding="15" Command="{Binding GoBack}"/>
         <TextBlock Text="{Binding Node.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
         <TextBlock Text="Constant Text"/>
         <ListView  SelectedValue="{Binding NodeSelected,
@@ -28,14 +29,16 @@
                    ItemsSource="{Binding ChildViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                    HorizontalAlignment="Stretch">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Button Command="{Binding Path=DataContext.Click,
+                <DataTemplate> 
+                    <Button Command="{Binding Path=DataContext.Click, 
                             RelativeSource={RelativeSource Mode=FindAncestor, 
-                            AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}">
+                            AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"
+                            >
                             <Button.Template>
                                 <ControlTemplate>
-                                    <TextBlock Text="{Binding Node.Name}"/> 
-                                </ControlTemplate>
+                                    <!--<TextBlock Text="{Binding Node.Name}"/>-->
+                                <local:TreeViewLeafView DataContext="{Binding}"/>
+                            </ControlTemplate>
                             </Button.Template>
                         </Button> 
                 </DataTemplate> 
