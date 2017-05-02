@@ -18,11 +18,13 @@ namespace MVVMHeplers
 
         Action<object> theCommand;
         Func<bool> canExecuteCondition;
+        Func<object,bool> canExecuteOnObject;
 
         public MyCommandWrapper(Action<object> a, Func<bool> canExecute)
         {
             theCommand = a;
             canExecuteCondition = canExecute;
+            canExecuteOnObject = (x) => true;
         } 
 
         public MyCommandWrapper(Action<object> a)
@@ -31,12 +33,22 @@ namespace MVVMHeplers
             canExecuteCondition = () => true;
         }
 
+        public MyCommandWrapper(Action<object> a, Func<object,bool> canExecute)
+        {
+            theCommand = a;
+            canExecuteCondition = null;
+            canExecuteOnObject = canExecute;
+        }
+
         //Can exexute if either the condition for execution is true
         //or if only an action is set
         public bool CanExecute(object parameter)
         {
             if (canExecuteCondition != null)
                 return canExecuteCondition();
+
+            if (canExecuteOnObject != null)
+                return canExecuteOnObject(parameter);
 
             if (theCommand != null)
                 return true;

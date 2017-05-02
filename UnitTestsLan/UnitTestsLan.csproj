@@ -52,7 +52,7 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTest2.cs" />
-    <Compile Include="UnitTest3.cs" />
+    <Compile Include="AggregatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -61,6 +61,10 @@
     <ProjectReference Include="..\HexView\HexView.csproj">
       <Project>{e3e3927b-f6fb-45ec-a490-665ec7bac639}</Project>
       <Name>HexView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVVMCore\MVVMCore.csproj">
+      <Project>{10563faf-5c2f-46aa-b451-93bd5ad59769}</Project>
+      <Name>MVVMCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\XLang\XLang.csproj">
       <Project>{07cdf4c0-33f8-4639-9920-ed8736fd95c7}</Project>

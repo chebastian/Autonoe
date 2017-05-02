@@ -58,7 +58,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\EvtMgr.cs" />
     <Compile Include="Model\CellSelectedEvent.cs" />
     <Compile Include="Model\ObservableValue.cs" />
     <Compile Include="Model\TreeNode.cs" />
@@ -105,10 +104,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Model\MatrixCell.cs" />
-    <Compile Include="Utils\Mediator.cs" />
     <Compile Include="Viewmodel\ModelViewBase.cs" />
-    <Compile Include="Utils\MultiDictionary.cs" />
-    <Compile Include="Utils\MyCommandWrapper.cs" />
     <Compile Include="View\MyControll.xaml.cs">
       <DependentUpon>MyControll.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -153,6 +149,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVVMCore\MVVMCore.csproj">
+      <Project>{10563faf-5c2f-46aa-b451-93bd5ad59769}</Project>
+      <Name>MVVMCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

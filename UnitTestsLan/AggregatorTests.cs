@@ -96,5 +96,20 @@ namespace UnitTestsLan
  
             Assert.AreEqual(listener_a.CallTimes,1, "Listener has not been nofied"); 
         }
+
+        [TestMethod]
+        public void CanListenWithAction()
+        {
+            int closureObj = 0;
+            UIEventaggregator<MockListener>.Instance.Subscribe((x) =>
+            {
+                closureObj++;
+            });
+
+
+            UIEventaggregator<MockListener>.Instance.Publish(new MockListener());
+
+            Assert.AreEqual(1, closureObj, "Not called"); 
+        }
     }
 }
