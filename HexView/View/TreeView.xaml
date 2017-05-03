@@ -7,21 +7,20 @@
              xmlns:local="clr-namespace:HexView.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel HorizontalAlignment="Stretch" 
+    <DockPanel  HorizontalAlignment="Stretch" 
                 Background="Gainsboro"
-                VerticalAlignment="Stretch"
-                MinHeight="20"
                 Name="root"
                 d:DataContext="{d:DesignInstance Type=vm:TreeNodeViewModel}">
-        <Button Content="Previous" Padding="15" Command="{Binding GoBack}"
+        <!--<Button Content="Previous" Padding="15" Command="{Binding GoBack}"
                 DockPanel.Dock="Top"
-                />
+                />-->
         <TextBlock Text="{Binding Node.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    DockPanel.Dock="Top"
                    />
         <ListView  SelectedValue="{Binding NodeSelected,
                    Mode=TwoWay,
                    UpdateSourceTrigger=PropertyChanged}"
+                   VerticalContentAlignment="Stretch"
                    HorizontalContentAlignment="Stretch"
                    Background="Green" 
                    ItemsSource="{Binding ChildViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

@@ -75,10 +75,10 @@ namespace HexView.Viewmodel
         private void DoClick(TreeNodeViewModel node)
         {
             //node.Node.Name = "this is me";
-            History.Add(Node);
-            Node = node.Node;
+            //History.Add(Node);
+            //Node = node.Node;
             if (_selectedListener != null)
-                _selectedListener.onSelected(Node);
+                _selectedListener.onSelected(node.Node);
 
         }
 

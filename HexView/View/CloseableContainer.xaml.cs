@@ -24,10 +24,8 @@ namespace HexView.View
         public CloseableContainer()
         {
             InitializeComponent();
-        }
-
-
-
+            this.layoutRoot.DataContext = this;
+        } 
 
         public ICommand CloseCommand
         {

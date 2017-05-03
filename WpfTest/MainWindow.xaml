@@ -29,18 +29,26 @@
                 /> 
 
         </DockPanel>
-            <ListView
+            <ListView 
                 Grid.Row="1"
                 Grid.ColumnSpan="2"
+                VerticalContentAlignment="Stretch"
                 ItemsSource="{
                  Binding FileTree
                 ,Mode=TwoWay
                 ,UpdateSourceTrigger=PropertyChanged
                 }"
                 >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                     <views:CloseableContainer
+                            HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                            DataContext="{Binding}"
                             CloseCommand="{Binding Path=DataContext.OnClose,
                             RelativeSource={RelativeSource Mode=FindAncestor, 
                             AncestorType={x:Type Window}}}"
