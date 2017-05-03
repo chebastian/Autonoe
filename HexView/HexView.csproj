@@ -66,6 +66,9 @@
     <Compile Include="Interface\ICellProvider.cs" />
     <Compile Include="Interface\IEventSubscriber.cs" />
     <Compile Include="Viewmodel\TreeNodeViewModel.cs" />
+    <Compile Include="View\CloseableContainer.xaml.cs">
+      <DependentUpon>CloseableContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MatrixCellView.xaml.cs">
       <DependentUpon>MatrixCellView.xaml</DependentUpon>
     </Compile>
@@ -87,6 +90,10 @@
     <Compile Include="View\TreeViewLeafView.xaml.cs">
       <DependentUpon>TreeViewLeafView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\CloseableContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MatrixCellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

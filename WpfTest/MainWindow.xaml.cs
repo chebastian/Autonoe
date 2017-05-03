@@ -1,8 +1,13 @@
 ﻿using HexView.Model;
 using HexView.Viewmodel;
+using MVVMHelpers;
+using MVVMHeplers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,8 +25,10 @@ namespace WpfTest
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, TreeNodeViewModel.IOnNodeSelected,INotifyPropertyChanged
     {
+        ObservableCollection<TreeNodeViewModel> _fileTree;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +44,44 @@ namespace WpfTest
 
             //node.Children.Add(second);
 
-            Tree.DataContext = new TreeNodeViewModel(node);
+            this.DataContext = this;
+            Tree.DataContext = new TreeNodeViewModel(node, this);
+            FileTree = new ObservableCollection<TreeNodeViewModel>();
+        }
+
+        public ObservableCollection<TreeNodeViewModel> FileTree
+        {
+            get => _fileTree;
+            set
+            {
+                _fileTree = value;
+                SetPropertyChanged();
+            }
+        }
+
+        public void onSelected(ITreeNode node)
+        {
+            FileTree.Add(new TreeNodeViewModel(node,this)); 
+        }
+
+        public ICommand OnClose
+        {
+            get
+            {
+                return new MyCommandWrapper(x => {
+                    FileTree.Remove((x as TreeNodeViewModel));
+                });
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void SetPropertyChanged([CallerMemberName] String name = null)
+        {
+            if(PropertyChanged != null)
+            {
+                if (name != null)
+                    PropertyChanged(this,new PropertyChangedEventArgs(name));
+            }
         }
     }
 }

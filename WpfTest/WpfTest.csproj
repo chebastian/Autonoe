@@ -106,6 +106,10 @@
       <Project>{e3e3927b-f6fb-45ec-a490-665ec7bac639}</Project>
       <Name>HexView</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MVVMCore\MVVMCore.csproj">
+      <Project>{10563FAF-5C2F-46AA-B451-93BD5AD59769}</Project>
+      <Name>MVVMCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

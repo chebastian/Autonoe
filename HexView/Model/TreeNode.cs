@@ -76,6 +76,7 @@ namespace HexView.Model
                     }
                 }
 
+                HasChildren = children.Count > 0;
                 return children;
             }
 

@@ -10,13 +10,48 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ss:MatrixView Grid.Column="0"/>
-        <views:TreeView Name="Tree" Grid.Column="1" Padding="15"/>
+
+        <!--<ss:MatrixView Grid.Column="0"/>-->
+        <DockPanel
+            Grid.ColumnSpan="2"
+            Width="Auto"
+                 >
+            <views:TreeView  
+                Name="Tree"
+                Padding="15"
+                /> 
+
+        </DockPanel>
+            <ListView
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                ItemsSource="{
+                 Binding FileTree
+                ,Mode=TwoWay
+                ,UpdateSourceTrigger=PropertyChanged
+                }"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                    <views:CloseableContainer
+                            CloseCommand="{Binding Path=DataContext.OnClose,
+                            RelativeSource={RelativeSource Mode=FindAncestor, 
+                            AncestorType={x:Type Window}}}"
+                                              >
+                        <views:CloseableContainer.TemplateControl>
+                            <views:TreeView DataContext="{Binding}"/> 
+                        </views:CloseableContainer.TemplateControl>
+                    </views:CloseableContainer>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
     </Grid>
 </Window>

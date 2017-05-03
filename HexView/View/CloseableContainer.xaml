@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="HexView.View.CloseableContainer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HexView.View"
+             mc:Ignorable="d" 
+             Name="control"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+
+        <ContentControl Content="{Binding TemplateControl,ElementName=control}" Name="content"/>
+        <Button Content="x" Command="{Binding CloseCommand,ElementName=control}" CommandParameter="{Binding ElementName=content,Path=DataContext}"/>
+    </StackPanel>
+</UserControl>

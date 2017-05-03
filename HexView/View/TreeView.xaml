@@ -7,42 +7,43 @@
              xmlns:local="clr-namespace:HexView.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel HorizontalAlignment="Stretch" 
+    <DockPanel HorizontalAlignment="Stretch" 
                 Background="Gainsboro"
-                Orientation="Vertical"
                 VerticalAlignment="Stretch"
                 MinHeight="20"
                 Name="root"
                 d:DataContext="{d:DesignInstance Type=vm:TreeNodeViewModel}">
-        <StackPanel.Resources>
-            <ResourceDictionary>
-            </ResourceDictionary>
-        </StackPanel.Resources>
-        <Button Content="Previous" Padding="15" Command="{Binding GoBack}"/>
-        <TextBlock Text="{Binding Node.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-        <TextBlock Text="Constant Text"/>
+        <Button Content="Previous" Padding="15" Command="{Binding GoBack}"
+                DockPanel.Dock="Top"
+                />
+        <TextBlock Text="{Binding Node.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   DockPanel.Dock="Top"
+                   />
         <ListView  SelectedValue="{Binding NodeSelected,
                    Mode=TwoWay,
                    UpdateSourceTrigger=PropertyChanged}"
                    HorizontalContentAlignment="Stretch"
                    Background="Green" 
                    ItemsSource="{Binding ChildViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                   HorizontalAlignment="Stretch">
+                   HorizontalAlignment="Stretch"
+                   DockPanel.Dock="Top"
+                   >
             <ListView.ItemTemplate>
                 <DataTemplate> 
-                    <Button Command="{Binding Path=DataContext.Click, 
+                    <Button 
+                            Command="{Binding Path=DataContext.Click, 
                             RelativeSource={RelativeSource Mode=FindAncestor, 
                             AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"
                             >
                             <Button.Template>
                                 <ControlTemplate>
                                     <!--<TextBlock Text="{Binding Node.Name}"/>-->
-                                <local:TreeViewLeafView DataContext="{Binding}"/>
+                                <local:TreeViewLeafView DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             </ControlTemplate>
                             </Button.Template>
                         </Button> 
                 </DataTemplate> 
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+    </DockPanel>
 </UserControl>

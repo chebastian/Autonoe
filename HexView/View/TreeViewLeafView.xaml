@@ -15,11 +15,14 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
-            <conv:BoolToColorConverter x:Key="boolToColor"/>
+            <conv:BoolToColorConverter x:Key="boolToColor">
+                <conv:BoolToColorConverter.TrueValue>HotPink</conv:BoolToColorConverter.TrueValue>
+                <conv:BoolToColorConverter.FalseValue>Black</conv:BoolToColorConverter.FalseValue>
+            </conv:BoolToColorConverter>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel LastChildFill="True"
-             Background="{Binding HasChildren, 
+             Background="{Binding Node.HasChildren, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,
              Converter={StaticResource boolToColor}}" >
         <Label Content="{Binding Node.Name}" />
         <!--<ListView ItemsSource="{Binding ChildViews}">

@@ -10,8 +10,8 @@ namespace HexView.Utils.Converters
 {
     public class BoolToColorConverter : IValueConverter
     {
-        public String TrueValue;
-        public String FalseValue;
+        public String TrueValue { get; set; }
+        public String FalseValue { get; set; }
 
         public BoolToColorConverter()
         {
@@ -26,7 +26,7 @@ namespace HexView.Utils.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 }

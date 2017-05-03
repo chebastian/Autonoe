@@ -13,15 +13,23 @@ namespace HexView.Viewmodel
 {
     public class TreeNodeViewModel : ViewModelBase
     {
-        public TreeNodeViewModel(ITreeNode node)
+        public interface IOnNodeSelected
+        {
+            void onSelected(ITreeNode node);
+        }
+
+        IOnNodeSelected _selectedListener;
+
+        public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener)
         {
             Node = node;
             ChildViews = new ObservableCollection<TreeNodeViewModel>();
 
+            _selectedListener = listener;
             History = new List<ITreeNode>(); 
 
             foreach (var child in Node.Children)
-                ChildViews.Add(new TreeNodeViewModel(child));
+                ChildViews.Add(new TreeNodeViewModel(child,listener));
         }
 
         private TreeNodeViewModel selectedNode; 
@@ -43,7 +51,7 @@ namespace HexView.Viewmodel
             node = selected;
             ChildViews.Clear();
             foreach (var child in Node.Children)
-                ChildViews.Add(new TreeNodeViewModel(child));
+                ChildViews.Add(new TreeNodeViewModel(child,_selectedListener));
         }
 
         public ICommand Click
@@ -69,6 +77,8 @@ namespace HexView.Viewmodel
             //node.Node.Name = "this is me";
             History.Add(Node);
             Node = node.Node;
+            if (_selectedListener != null)
+                _selectedListener.onSelected(Node);
 
         }
 
@@ -77,8 +87,7 @@ namespace HexView.Viewmodel
             get => childViews;
             set { childViews = value;SetPropertyChanged(); }
         }
-
-
+ 
         private ObservableCollection<TreeNodeViewModel> childViews; 
     }
 }
