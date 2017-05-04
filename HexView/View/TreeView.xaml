@@ -7,6 +7,24 @@
              xmlns:local="clr-namespace:HexView.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="buttonStyle" TargetType="Button">
+                <Setter Property="Foreground" Value="Black"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="True">
+                        <Setter Property="FontSize" Value="18"/> 
+                        <Setter Property="Foreground" Value="PeachPuff"/> 
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="FontSize" Value="28"/>
+                        <Setter Property="TextElement.Foreground" Value="Black" />
+                        <Setter Property="TextElement.Background" Value="Black" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style> 
+        </ResourceDictionary>
+    </UserControl.Resources>
     <DockPanel  HorizontalAlignment="Stretch" 
                 Background="Gainsboro"
                 Name="root"
@@ -30,6 +48,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate> 
                     <Button 
+                            TextElement.Foreground="Honeydew"
+                            Style="{StaticResource buttonStyle}"
                             Command="{Binding Path=DataContext.Click, 
                             RelativeSource={RelativeSource Mode=FindAncestor, 
                             AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"
