@@ -40,6 +40,8 @@ namespace HexView.Model
                 SetPropertyChanged();
             }
         }
+
+        public ITreeNode Parent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 
     public class FileTreeNode : ViewModelBase,ITreeNode
@@ -50,13 +52,21 @@ namespace HexView.Model
 
         }
 
-        public FileTreeNode(String root)
-            :base()
+        public FileTreeNode(String root, ITreeNode parent)
         {
             rootDirectory = root;
-            children = null;
             Name = rootDirectory;
+            Parent = parent;
+            children = null;
         }
+
+        //public FileTreeNode(String root)
+        //    :base()
+        //{
+        //    rootDirectory = root;
+        //    children = null;
+        //    Name = rootDirectory;
+        //}
 
         private String name;
         private List<ITreeNode> children;
@@ -71,8 +81,8 @@ namespace HexView.Model
                     children = new List<ITreeNode>();
                     if (Directory.Exists(rootDirectory))
                     {
-                        children.AddRange( Directory.GetDirectories(rootDirectory).Select(x => new FileTreeNode(x)) ); 
-                        children.AddRange( Directory.GetFiles(rootDirectory).Select(x => new FileTreeNode(x)) ); 
+                        children.AddRange( Directory.GetDirectories(rootDirectory).Select(x => new FileTreeNode(x,this)) ); 
+                        children.AddRange( Directory.GetFiles(rootDirectory).Select(x => new FileTreeNode(x,this)) ); 
                     }
                 }
 
@@ -94,10 +104,14 @@ namespace HexView.Model
                 SetPropertyChanged();
             }
         }
+
+        private ITreeNode parent;
+        public ITreeNode Parent { get => parent; set { parent = value; SetPropertyChanged(); } }
     }
 
         public interface ITreeNode
     {
+        ITreeNode Parent { get; set; }
         String Name { get; set; } 
         List<ITreeNode> Children { get; set; }
         bool HasChildren { get; set; }

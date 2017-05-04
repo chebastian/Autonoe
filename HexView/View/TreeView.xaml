@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:HexView.Viewmodel"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:HexView.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style x:Key="buttonStyle" TargetType="Button">
+            <Style x:Key="buttonStyle" TargetType="UserControl">
                 <Setter Property="Foreground" Value="Black"/>
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="True">
@@ -47,19 +48,19 @@
                    >
             <ListView.ItemTemplate>
                 <DataTemplate> 
-                    <Button 
-                            TextElement.Foreground="Honeydew"
-                            Style="{StaticResource buttonStyle}"
-                            Command="{Binding Path=DataContext.Click, 
-                            RelativeSource={RelativeSource Mode=FindAncestor, 
-                            AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"
-                            >
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <local:TreeViewLeafView DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button> 
+                    <local:TreeViewLeafView 
+                        DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                                Command="{Binding Path=DataContext.Click, 
+                                RelativeSource={RelativeSource Mode=FindAncestor, 
+                                AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"
+                                />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </local:TreeViewLeafView>
                 </DataTemplate> 
             </ListView.ItemTemplate>
         </ListView>

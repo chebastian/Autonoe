@@ -10,13 +10,13 @@
     <StackPanel Name="layoutRoot"
                 VerticalAlignment="Top"
                 >
-        <ContentControl Content="{Binding Path=DataContext.TemplateControl,
-                                    ElementName=layoutRoot}"
-                                    Name="content" DataContext="{Binding ElementName=root, Path=DataContext}"
-                        />
         <Button Content="x" 
                 Command="{Binding CloseCommand}" 
                 CommandParameter="{Binding ElementName=root,Path=DataContext}"
                 />
+        <ContentControl Content="{Binding Path=DataContext.TemplateControl,
+                                    ElementName=layoutRoot}"
+                                    Name="content" DataContext="{Binding ElementName=root, Path=DataContext}"
+                        />
     </StackPanel>
 </UserControl>

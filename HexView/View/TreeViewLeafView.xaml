@@ -16,14 +16,14 @@
         <ResourceDictionary>
             <conv:BoolToColorConverter x:Key="boolToColor">
                 <conv:BoolToColorConverter.TrueValue>HotPink</conv:BoolToColorConverter.TrueValue>
-                <conv:BoolToColorConverter.FalseValue>Black</conv:BoolToColorConverter.FalseValue>
+                <conv:BoolToColorConverter.FalseValue>White</conv:BoolToColorConverter.FalseValue>
             </conv:BoolToColorConverter>
         </ResourceDictionary>
     </UserControl.Resources>
-             <!--Background="{Binding Node.HasChildren,
-             Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,
-             Converter={StaticResource boolToColor}}"--> 
     <DockPanel LastChildFill="True"
+             Background="{Binding Node.HasChildren,
+             Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,
+             Converter={StaticResource boolToColor}}" 
                >
         <Label Content="{Binding Node.Name}" FontFamily="Consolas"/>
         <!--<ListView ItemsSource="{Binding ChildViews}">

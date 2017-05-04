@@ -35,7 +35,7 @@ namespace WpfTest
 
             //var node = new FileTreeNode(@"C:\totalcmd");
             //var node = new FileTreeNode(@"C:\GOG Games");
-            var node = new FileTreeNode(@"C:\testfolder");
+            var node = new FileTreeNode(@"C:\testfolder",null);
 
             //var node = new TreeNode() { Name = "hest " };
             //node.Children.Add(new TreeNode() { Name = "Child" });
