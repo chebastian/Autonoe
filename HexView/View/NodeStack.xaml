@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="HexView.View.NodeStack"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:HexView.Viewmodel"
+             xmlns:local="clr-namespace:HexView.View"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:NodeStackViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Orientation="Vertical"> 
+            <ListView 
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                VerticalContentAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                ItemsSource="{
+                 Binding Trees
+                ,Mode=TwoWay
+                ,UpdateSourceTrigger=PropertyChanged
+                }"
+                >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                    <local:CloseableContainer
+                            HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                            DataContext="{Binding}"
+                            CloseCommand="{Binding Path=DataContext.OnClose,
+                            RelativeSource={RelativeSource Mode=FindAncestor, 
+                            AncestorType={x:Type Window}}}"
+                                              >
+                        <local:CloseableContainer.TemplateControl>
+                            <local:TreeView DataContext="{Binding}"/> 
+                        </local:CloseableContainer.TemplateControl>
+                    </local:CloseableContainer>
+                    </DataTemplate>
+                </ListView.ItemTemplate> 
+            </ListView>
+    </StackPanel>
+</UserControl>

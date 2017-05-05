@@ -28,6 +28,7 @@ namespace WpfTest
     public partial class MainWindow : Window, TreeNodeViewModel.IOnNodeSelected,INotifyPropertyChanged
     {
         ObservableCollection<TreeNodeViewModel> _fileTree;
+        public Dictionary<object, List<TreeNodeViewModel>> _test { get; set; }
 
         public MainWindow()
         {
@@ -48,6 +49,7 @@ namespace WpfTest
             this.DataContext = this;
             Tree.DataContext = new TreeNodeViewModel(node, this);
             FileTree = new ObservableCollection<TreeNodeViewModel>();
+            _test = new Dictionary<object, List<TreeNodeViewModel>>();
         }
 
         public ObservableCollection<TreeNodeViewModel> FileTree
@@ -63,6 +65,25 @@ namespace WpfTest
         public void onSelected(ITreeNode node)
         {
             FileTree.Add(new TreeNodeViewModel(node,this)); 
+            if(node.Parent != null)
+            {
+                if(!_test.ContainsKey(node.Parent))
+                {
+                    _test.Add(node.Parent, new List<TreeNodeViewModel>());
+                }
+
+                _test[node.Parent].Add(new TreeNodeViewModel(node,this));
+            }
+            else
+            {
+                var first = new FileTreeNode();
+                if(!_test.ContainsKey(node))
+                {
+                    _test.Add(first,new List<TreeNodeViewModel>());
+                }
+
+                _test[first].Add(new TreeNodeViewModel(node,this));
+            }
         }
 
         public ICommand OnClose

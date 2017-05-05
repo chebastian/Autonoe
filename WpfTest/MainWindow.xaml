@@ -60,5 +60,5 @@
                     </DataTemplate>
                 </ListView.ItemTemplate> 
             </ListView>
-    </Grid>
+    </Grid> 
 </Window>
