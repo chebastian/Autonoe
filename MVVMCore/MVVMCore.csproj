@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelViewBase.cs" />
     <Compile Include="UIEventaggregator.cs" />
     <Compile Include="Mediator.cs" />
     <Compile Include="MultiDictionary.cs" />

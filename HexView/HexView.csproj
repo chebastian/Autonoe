@@ -116,7 +116,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Model\MatrixCell.cs" />
-    <Compile Include="Viewmodel\ModelViewBase.cs" />
     <Compile Include="View\MyControll.xaml.cs">
       <DependentUpon>MyControll.xaml</DependentUpon>
       <SubType>Code</SubType>

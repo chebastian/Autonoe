@@ -1,4 +1,5 @@
 ﻿using CRUDContainer.Model;
+using MVVMHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace CRUDContainer.ViewModel
 {
-    public class CRUDItemViewModel<T> where T: INotifyPropertyChanged , IEquatable<T>
+    public class CRUDItemViewModel<T> : ViewModelBase 
+        where T: INotifyPropertyChanged , IEquatable<T>
     {
         CRUDItem<T> theItem;
         public CRUDItemViewModel(CRUDItem<T> item)
@@ -16,11 +18,18 @@ namespace CRUDContainer.ViewModel
             TheItem = item; 
         }
 
-        public CRUDItem<T> TheItem { get => theItem;
+        public CRUDItemViewModel()
+        { 
+        }
+
+        public CRUDItem<T> TheItem
+        {
+            get => theItem;
             set
             {
                 theItem = value;
                 SetPropertyChanged();
             }
+        } 
     }
 }

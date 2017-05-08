@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="CRUDContainer.View.CRUDItemContainerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CRUDContainer.View"
+             mc:Ignorable="d" 
+             Background="White"
+             Name="root"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+        <DockPanel LastChildFill="False">
+            <Label Content="Status" DockPanel.Dock="Left"/>
+            <Button Content="x" DockPanel.Dock="Right" Padding="5" Margin="2"/> 
+        </DockPanel> 
+        <ContentControl Content="{Binding Path=DataContext.TemplateControl,
+                                    ElementName=layoutRoot}"
+                                    Name="content" DataContext="{Binding ElementName=root, Path=DataContext}"
+                        />
+    </StackPanel>
+</UserControl>
