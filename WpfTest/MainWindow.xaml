@@ -11,7 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -29,6 +29,34 @@
                 /> 
 
         </DockPanel>
+        <ListView
+                ItemsSource="{
+                Binding _test,
+                Mode= TwoWay,
+                UpdateSourceTrigger=PropertyChanged
+                }">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                    <views:CloseableContainer
+                            HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                            DataContext="{Binding}"
+                            CloseCommand="{Binding Path=DataContext.OnClose,
+                            RelativeSource={RelativeSource Mode=FindAncestor, 
+                            AncestorType={x:Type Window}}}"
+                                              >
+                        <views:CloseableContainer.TemplateControl>
+                            <views:NodeStack DataContext="{Binding}"/>
+                        </views:CloseableContainer.TemplateControl>
+                    </views:CloseableContainer>
+                    </DataTemplate>
+                </ListView.ItemTemplate> 
+        </ListView>
+
             <ListView 
                 Grid.Row="1"
                 Grid.ColumnSpan="2"

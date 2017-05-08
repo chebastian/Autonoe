@@ -65,6 +65,7 @@
     <Compile Include="Viewmodel\HexMatrixViewModel.cs" />
     <Compile Include="Interface\ICellProvider.cs" />
     <Compile Include="Interface\IEventSubscriber.cs" />
+    <Compile Include="Viewmodel\TreeNodeStack.cs" />
     <Compile Include="Viewmodel\TreeNodeViewModel.cs" />
     <Compile Include="View\CloseableContainer.xaml.cs">
       <DependentUpon>CloseableContainer.xaml</DependentUpon>
@@ -166,6 +167,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CRUDContainer\CRUDContainer.csproj">
+      <Project>{97ba2a85-5ca7-45d1-8366-dc33bd821953}</Project>
+      <Name>CRUDContainer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MVVMCore\MVVMCore.csproj">
       <Project>{10563faf-5c2f-46aa-b451-93bd5ad59769}</Project>
       <Name>MVVMCore</Name>
