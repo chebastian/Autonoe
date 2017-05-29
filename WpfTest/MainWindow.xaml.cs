@@ -1,12 +1,20 @@
-﻿using HexView.Model;
+﻿using CRUDContainer.Model;
+using CRUDContainer.View;
+using CRUDContainer.ViewModel;
+using HexView.Model;
 using HexView.Viewmodel;
+using MVVMCore.Events;
 using MVVMHelpers;
 using MVVMHeplers;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,17 +38,24 @@ namespace WpfTest
         ObservableCollection<TreeNodeViewModel> _fileTree;
         public List<NodeStackViewModel> _test { get; set; }
 
+        [Import(typeof(IEventAggregator))]
+        IEventAggregator _aggregator;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            //var node = new FileTreeNode(@"C:\totalcmd");
-            //var node = new FileTreeNode(@"C:\GOG Games");
+            var agg = new AggregateCatalog();
+            agg.Catalogs.Add(new AssemblyCatalog(typeof(EvtAgg).Assembly));
+            agg.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            var cont = new CompositionContainer(agg);
+            cont.ComposeParts(this);
+
+
+
             var node = new FileTreeNode(@"C:\testfolder",null);
-
             //var node = new TreeNode() { Name = "hest " };
-            //node.Children.Add(new TreeNode() { Name = "Child" });
-
+            //node.Children.Add(new TreeNode() { Name = "Child" }); 
             //var second = new TreeNode() { Name = "Second Child" }; 
             //second.Children.Add(new TreeNode() { Name = "grandchild" });
 
@@ -52,8 +67,25 @@ namespace WpfTest
             _test = new List<NodeStackViewModel>();
 
             var l = new List<TreeNodeViewModel>();
-            //_test.Add(new NodeStackViewModel(FileTree));
-        }
+
+            var list = new List<CRUDItemViewModel<CRUDItemBase>>();
+            list.Add(new CRUDItemViewModel<CRUDItemBase>()); 
+            list.Add(new CRUDItemViewModel<CRUDItemBase>()); 
+            list.Add(new CRUDItemViewModel<CRUDItemBase>()); 
+
+            var CRUD = new CRUDItemListViewModel(_aggregator, list);
+            var cview = new CRUDItemList();
+            cview.DataContext = CRUD;
+            var win = new Window()
+            {
+                Content = cview
+            };
+
+            win.Show(); 
+
+
+        //_test.Add(new NodeStackViewModel(FileTree));
+    }
 
         public ObservableCollection<TreeNodeViewModel> FileTree
         {

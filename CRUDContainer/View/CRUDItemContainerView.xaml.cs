@@ -23,6 +23,7 @@ namespace CRUDContainer.View
         public CRUDItemContainerView()
         {
             InitializeComponent();
+            layoutRoot.DataContext = this;
         }
 
         public object TemplateControl
@@ -33,6 +34,16 @@ namespace CRUDContainer.View
 
         // Using a DependencyProperty as the backing store for TemplateControl.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TemplateControlProperty =
-            DependencyProperty.Register("TemplateControl", typeof(object), typeof(CloseableContainer), new PropertyMetadata(0));
+            DependencyProperty.Register("TemplateControl", typeof(object), typeof(CRUDItemContainerView), new PropertyMetadata(0));
+
+        public ICommand RemoveCommand
+        {
+            get { return (ICommand)GetValue(RemoveCommandProperty); }
+            set { SetValue(RemoveCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TemplateControl.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RemoveCommandProperty =
+            DependencyProperty.Register("RemoveCommand", typeof(ICommand), typeof(CRUDItemContainerView), new PropertyMetadata(null));
     }
 }

@@ -8,12 +8,21 @@
              Background="White"
              Name="root"
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+    <StackPanel 
+        Name="layoutRoot"
+        Orientation="Vertical" HorizontalAlignment="Stretch">
         <DockPanel LastChildFill="False">
             <Label Content="Status" DockPanel.Dock="Left"/>
-            <Button Content="x" DockPanel.Dock="Right" Padding="5" Margin="2"/> 
         </DockPanel> 
-        <ContentControl Content="{Binding Path=DataContext.TemplateControl,
+            <Button Content="x" DockPanel.Dock="Right" Padding="5" Margin="2" 
+                        Command="{
+                            Binding ElementName=layoutRoot, 
+                            Path=DataContext.RemoveCommand 
+                        }" 
+                    CommandParameter="{Binding Path=DataContext,ElementName=root}" 
+                    /> 
+        <ContentControl Content="{
+                                    Binding Path=DataContext.TemplateControl,
                                     ElementName=layoutRoot}"
                                     Name="content" DataContext="{Binding ElementName=root, Path=DataContext}"
                         />

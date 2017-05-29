@@ -13,9 +13,16 @@ namespace CRUDContainer.ViewModel
         where T: INotifyPropertyChanged , IEquatable<T>
     {
         CRUDItem<T> theItem;
+        public int MyId;
+        static int index = 0;
+
+        String someParam;
+
         public CRUDItemViewModel(CRUDItem<T> item)
         {
-            TheItem = item; 
+            TheItem = item;
+            MyId = index;
+            index++;
         }
 
         public CRUDItemViewModel()
@@ -30,6 +37,26 @@ namespace CRUDContainer.ViewModel
                 theItem = value;
                 SetPropertyChanged();
             }
+        }
+
+        public string SomeParam { get => someParam; set { someParam = value; SetPropertyChanged(); } }
+    }
+
+    public interface IViewModel : IEquatable<IViewModel>, INotifyPropertyChanged
+    {
+
+    }
+
+    public class CrudFactory 
+    {
+        public static CRUDItem<T> Create<T>(T item) where T : IViewModel,IEquatable<T>
+        {
+            return new CRUDItem<T>(item);
+        }
+
+        public static CRUDItemViewModel<T> CreateVM<T>(T item) where T : IViewModel,IEquatable<T>
+        {
+            return new CRUDItemViewModel<T>(Create(item));
         } 
     }
 }

@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="CRUDContainer.View.CRUDItemList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:CRUDContainer.ViewModel" 
+             xmlns:wpf="clr-namespace:MVVMCore.Events;assembly=MVVMCore"
+             xmlns:local="clr-namespace:CRUDContainer.View"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:CRUDItemListViewModel}" 
+             Name="root"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="crudItem">
+                    <local:CRUDItemContainerView
+                        DataContext="{Binding}"
+                        RemoveCommand="{
+                        Binding Path=DataContext.RemoveCommand, 
+                        RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType={x:Type UserControl}}
+                        }" 
+
+                        wpf:EventCommandHandler.Command="{
+                                Binding Path=DataContext.RemoveCommand, 
+                                RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType={x:Type local:CRUDItemList}}
+                        }"
+
+                        wpf:EventCommandHandler.RoutedEvent="PreviewMouseDown"
+                        wpf:EventCommandHandler.CommandParameter="{Binding}"
+
+                        > 
+                        <local:CRUDItemContainerView.TemplateControl>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=DataContext.Number,
+                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:CRUDItemList}}
+                                }"/>
+                                <local:CRUDItemView/> 
+                            </StackPanel>
+                        </local:CRUDItemContainerView.TemplateControl>
+                    </local:CRUDItemContainerView> 
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+                        <!--RemoveCommand="{
+                            Binding ElementName=root, 
+                            Path=DataContext.RemoveCommand
+                        }"-->
+
+        <Button Content=" New " Command="{Binding NewItemCommand}" CommandParameter="{Binding TemplateItem}" Margin="3"/> 
+        <ListView ItemsSource="{Binding VisibleCollection, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:CRUDItemContainerView
+                        DataContext="{Binding}"
+                        RemoveCommand="{
+                        Binding Path=DataContext.RemoveCommand, 
+                        RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType={x:Type UserControl}}
+                        }" 
+
+                        wpf:EventCommandHandler.Command="{
+                                Binding Path=DataContext.RemoveCommand, 
+                                RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType={x:Type local:CRUDItemList}}
+                        }"
+
+                        wpf:EventCommandHandler.RoutedEvent="PreviewMouseDown"
+                        wpf:EventCommandHandler.CommandParameter="{Binding}"
+
+                        >
+
+                        <!--wpf:UIItemBehaviours.LClickCommand="{
+                                Binding Path=DataContext.RemoveCommand, 
+                                RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType={x:Type local:CRUDItemList}}--> 
+
+                        <!--<local:CRUDItemContainerView.InputBindings>
+                        <MouseBinding MouseAction=" " CommandParameter="{Binding}" Command="{
+                                Binding Path=DataContext.RemoveCommand, 
+                                RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType={x:Type local:CRUDItemList}}
+                            }"/>-->
+
+                        <local:CRUDItemContainerView.TemplateControl>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=DataContext.Number,
+                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:CRUDItemList}}
+                                }"/>
+                                <local:CRUDItemView/> 
+                            </StackPanel>
+                        </local:CRUDItemContainerView.TemplateControl>
+                    </local:CRUDItemContainerView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Label Content="Removed"/>
+        <ListBox ItemsSource="{Binding RemovedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Test"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+
+</UserControl>
