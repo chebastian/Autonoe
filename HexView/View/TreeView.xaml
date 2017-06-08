@@ -68,7 +68,7 @@
                             DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             >
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
                                     <i:InvokeCommandAction 
                                     Command="{Binding Path=DataContext.Click, 
                                     RelativeSource={RelativeSource Mode=FindAncestor, 
