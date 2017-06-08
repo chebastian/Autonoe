@@ -22,25 +22,28 @@ namespace HexView.Viewmodel
 
         public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener)
         {
-            _childViews = new ObservableCollection<TreeNodeViewModel>();
-            _children = node.Children;
-            ChildViews = new ObservableCollection<TreeNodeViewModel>();
+            _siblingViews = new ObservableCollection<TreeNodeViewModel>();
+            _siblings = node.Children;
+            SiblingViews = new ObservableCollection<TreeNodeViewModel>();
 
             Node = node; 
 
             _selectedListener = listener;
             History = new List<ITreeNode>();
+ 
+            IsEmpty = _siblings.Any();
+        } 
+ 
+        public static TreeNodeViewModel CreateFileTreeRoot(ITreeNode node, IOnNodeSelected listener)
+        {
+            var tree =  new TreeNodeViewModel(node,listener);
+            tree.NodeSelected = tree.SiblingViews.First();
 
-
-            //foreach (var child in Node.Children)
-            //    ChildViews.Add(new TreeNodeViewModel(child,listener)); 
-            //IsEmpty = ChildViews.Any();
-
-            IsEmpty = _children.Any();
+            return tree;
         }
 
         private TreeNodeViewModel selectedNode; 
-        public TreeNodeViewModel NodeSelected { get => selectedNode; set { selectedNode = value; SetPropertyChanged(); } }
+        public TreeNodeViewModel NodeSelected { get => selectedNode; set { selectedNode = value; DoClick(selectedNode);  SetPropertyChanged(); } }
         public List<ITreeNode> History;
 
         private ITreeNode node;
@@ -48,21 +51,24 @@ namespace HexView.Viewmodel
 
         private void SetSelectedNode(ITreeNode selected)
         { 
-            if (ChildViews == null)
+            if (SiblingViews == null)
             {
                 node = selected;
                 return;
             } 
 
             node = selected;
-            ChildViews.Clear();
+            SiblingViews.Clear();
             //foreach (var child in Node.Children)
             //    ChildViews.Add(new TreeNodeViewModel(child,_selectedListener));
         }
 
         public ICommand Click
         {
-            get => new MyCommandWrapper(x => DoClick(x as TreeNodeViewModel), (x) => (x as TreeNodeViewModel).Node.HasChildren);
+            get => new MyCommandWrapper(
+                //x => DoClick(x as TreeNodeViewModel),
+                x => { },
+                x => (x as TreeNodeViewModel).Node.HasChildren);
         }
 
         bool _empty;
@@ -96,23 +102,23 @@ namespace HexView.Viewmodel
 
         }
 
-        public ObservableCollection<TreeNodeViewModel> ChildViews
+        public ObservableCollection<TreeNodeViewModel> SiblingViews
         {
             get
             {
-                if(!_childViews.Any())
+                if(!_siblingViews.Any())
                 {
-                    foreach (var view in _children)
-                        _childViews.Add(new TreeNodeViewModel(view, this._selectedListener));
+                    foreach (var view in _siblings)
+                        _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
 
-                    IsEmpty = _childViews.Any(); 
+                    IsEmpty = _siblingViews.Any(); 
                 } 
-                return _childViews;
+                return _siblingViews;
             }
-            set { _childViews = value;SetPropertyChanged(); }
+            set { _siblingViews = value;SetPropertyChanged(); }
         }
  
-        private ObservableCollection<TreeNodeViewModel> _childViews;
-        private List<ITreeNode> _children;
+        private ObservableCollection<TreeNodeViewModel> _siblingViews;
+        private List<ITreeNode> _siblings;
     }
 }
