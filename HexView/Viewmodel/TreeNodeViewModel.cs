@@ -22,14 +22,21 @@ namespace HexView.Viewmodel
 
         public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener)
         {
-            Node = node;
+            _childViews = new ObservableCollection<TreeNodeViewModel>();
+            _children = node.Children;
             ChildViews = new ObservableCollection<TreeNodeViewModel>();
 
-            _selectedListener = listener;
-            History = new List<ITreeNode>(); 
+            Node = node; 
 
-            foreach (var child in Node.Children)
-                ChildViews.Add(new TreeNodeViewModel(child,listener));
+            _selectedListener = listener;
+            History = new List<ITreeNode>();
+
+
+            //foreach (var child in Node.Children)
+            //    ChildViews.Add(new TreeNodeViewModel(child,listener)); 
+            //IsEmpty = ChildViews.Any();
+
+            IsEmpty = _children.Any();
         }
 
         private TreeNodeViewModel selectedNode; 
@@ -45,18 +52,28 @@ namespace HexView.Viewmodel
             {
                 node = selected;
                 return;
-            }
-
+            } 
 
             node = selected;
             ChildViews.Clear();
-            foreach (var child in Node.Children)
-                ChildViews.Add(new TreeNodeViewModel(child,_selectedListener));
+            //foreach (var child in Node.Children)
+            //    ChildViews.Add(new TreeNodeViewModel(child,_selectedListener));
         }
 
         public ICommand Click
         {
-            get => new MyCommandWrapper(x => DoClick(x as TreeNodeViewModel), (x) => (x as TreeNodeViewModel).ChildViews.Any());
+            get => new MyCommandWrapper(x => DoClick(x as TreeNodeViewModel), (x) => (x as TreeNodeViewModel).Node.HasChildren);
+        }
+
+        bool _empty;
+        public bool IsEmpty
+        {
+            get => _empty;
+            set
+            {
+                _empty = value;
+                SetPropertyChanged();
+            }
         }
 
         public ICommand GoBack
@@ -74,9 +91,6 @@ namespace HexView.Viewmodel
 
         private void DoClick(TreeNodeViewModel node)
         {
-            //node.Node.Name = "this is me";
-            //History.Add(Node);
-            //Node = node.Node;
             if (_selectedListener != null)
                 _selectedListener.onSelected(node.Node);
 
@@ -84,10 +98,21 @@ namespace HexView.Viewmodel
 
         public ObservableCollection<TreeNodeViewModel> ChildViews
         {
-            get => childViews;
-            set { childViews = value;SetPropertyChanged(); }
+            get
+            {
+                if(!_childViews.Any())
+                {
+                    foreach (var view in _children)
+                        _childViews.Add(new TreeNodeViewModel(view, this._selectedListener));
+
+                    IsEmpty = _childViews.Any(); 
+                } 
+                return _childViews;
+            }
+            set { _childViews = value;SetPropertyChanged(); }
         }
  
-        private ObservableCollection<TreeNodeViewModel> childViews; 
+        private ObservableCollection<TreeNodeViewModel> _childViews;
+        private List<ITreeNode> _children;
     }
 }

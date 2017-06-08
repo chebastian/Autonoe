@@ -6,6 +6,7 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ using static MVVMCore.Events.TestEvents;
 
 namespace CRUDContainer.ViewModel
 {
-    public class CRUDItemListViewModel : ViewModelBase
+    public class CRUDItemListViewModel<T> : ViewModelBase where T : IEquatable<T>, INotifyPropertyChanged
     { 
         public CRUDItemListViewModel(IEventAggregator aggregator, List<CRUDItemViewModel<CRUDItemBase>> original)
         { 
@@ -110,8 +111,7 @@ namespace CRUDContainer.ViewModel
                 SetPropertyChanged();
             }
         } 
-
-
+ 
         public ICommand NewItemCommand
         {
             get
@@ -121,6 +121,8 @@ namespace CRUDContainer.ViewModel
                     VisibleCollection.Add(x as CRUDItemViewModel<CRUDItemBase>);
                     CreatedItems.Add(VisibleCollection.Last().MyId);
                     SetPropertyChanged("Diff");
+
+                    TemplateItem = new CRUDItemViewModel<CRUDItemBase>(new CRUDItem<CRUDItemBase>(new CRUDItemBase(5)));
                 });
             }
         } 
@@ -129,10 +131,13 @@ namespace CRUDContainer.ViewModel
         private ICommand removeCommand;
 
         private IEventAggregator _aggregator;
+        public ObservableCollection<T> Stuff;
+
         private ObservableCollection<int> _removed;
         private ObservableCollection<int> _created;
         private ObservableCollection<int> _updated;
         private CRUDItemViewModel<CRUDItemBase> _template;
+        private CRUDItemViewModel<T> _t_Template;
 
         public ICommand RemoveCommand
         {
@@ -149,5 +154,10 @@ namespace CRUDContainer.ViewModel
         public ObservableCollection<int> RemovedItems { get => _removed; set { _removed = value; SetPropertyChanged(); } }
         public ObservableCollection<int> CreatedItems { get => _created; set { _created = value; SetPropertyChanged(); } }
         public ObservableCollection<int> UpdatedItems { get => _updated; set { _updated = value; SetPropertyChanged(); } } 
+    }
+
+    public class CRUDItemBaseVM : CRUDItemViewModel<CRUDItemBase>
+    {
+
     }
 }

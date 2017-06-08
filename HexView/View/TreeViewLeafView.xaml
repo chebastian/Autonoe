@@ -20,7 +20,7 @@
             </conv:BoolToColorConverter>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel LastChildFill="True"
+    <Grid 
              Background="{Binding Node.HasChildren,
              Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,
              Converter={StaticResource boolToColor}}" 
@@ -33,5 +33,5 @@
                 </DataTemplate> 
             </ListView.ItemTemplate>
         </ListView>-->
-    </DockPanel>
+    </Grid>
 </UserControl>

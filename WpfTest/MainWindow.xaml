@@ -27,10 +27,11 @@
                 Name="Tree"
                 Padding="15"
                 /> 
-
         </DockPanel>
-        <ListView
-                ItemsSource="{
+        <ListView 
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{ 
                 Binding _test,
                 Mode= TwoWay,
                 UpdateSourceTrigger=PropertyChanged
@@ -55,8 +56,7 @@
                     </views:CloseableContainer>
                     </DataTemplate>
                 </ListView.ItemTemplate> 
-        </ListView>
-
+        </ListView> 
             <ListView 
                 Grid.Row="1"
                 Grid.ColumnSpan="2"

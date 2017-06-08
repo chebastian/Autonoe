@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:HexView.Viewmodel"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:conv="clr-namespace:HexView.Utils.Converters"
              xmlns:local="clr-namespace:HexView.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -23,46 +24,62 @@
                         <Setter Property="TextElement.Background" Value="Black" />
                     </Trigger>
                 </Style.Triggers>
-            </Style> 
+            </Style>
+            <conv:BoolToVisible x:Key="boolToVisible"/>
+            <conv:BoolToHidden x:Key="boolToHidden"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel  HorizontalAlignment="Stretch" 
-                Background="Gainsboro"
-                Name="root"
-                d:DataContext="{d:DesignInstance Type=vm:TreeNodeViewModel}">
-        <!--<Button Content="Previous" Padding="15" Command="{Binding GoBack}"
-                DockPanel.Dock="Top"
-                />-->
-        <TextBlock Text="{Binding Node.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                   DockPanel.Dock="Top"
-                   />
-        <ListView  SelectedValue="{Binding NodeSelected,
-                   Mode=TwoWay,
-                   UpdateSourceTrigger=PropertyChanged}"
-                   VerticalContentAlignment="Stretch"
-                   HorizontalContentAlignment="Stretch"
-                   Background="Green" 
-                   ItemsSource="{Binding ChildViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                   HorizontalAlignment="Stretch"
-                   DockPanel.Dock="Top"
-                   >
-            <ListView.ItemTemplate>
-                <DataTemplate> 
-                    <local:TreeViewLeafView 
-                        DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        >
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction 
-                                Command="{Binding Path=DataContext.Click, 
-                                RelativeSource={RelativeSource Mode=FindAncestor, 
-                                AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"
-                                />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </local:TreeViewLeafView>
-                </DataTemplate> 
-            </ListView.ItemTemplate>
-        </ListView>
-    </DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+            <TextBlock 
+                Grid.Row="0"
+                Text="{Binding Node.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                       DockPanel.Dock="Top"
+                       /> 
+        <DockPanel
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch" 
+                    LastChildFill="True"
+                    Background="Gainsboro"
+                    Name="root"
+                    d:DataContext="{d:DesignInstance Type=vm:TreeNodeViewModel}">
+            <TextBlock 
+                Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToHidden}}"
+                Text="Nothing to show here"
+                />
+            <ListView  
+                       Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToVisible}}"
+                       SelectedValue="{Binding NodeSelected,
+                       Mode=TwoWay,
+                       UpdateSourceTrigger=PropertyChanged}"
+                       VerticalContentAlignment="Stretch"
+                       HorizontalContentAlignment="Stretch"
+                       Background="Green" 
+                       ItemsSource="{Binding ChildViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Stretch"
+                       DockPanel.Dock="Top"
+                       >
+                <ListView.ItemTemplate>
+                    <DataTemplate> 
+                        <local:TreeViewLeafView 
+                            DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction 
+                                    Command="{Binding Path=DataContext.Click, 
+                                    RelativeSource={RelativeSource Mode=FindAncestor, 
+                                    AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"
+                                    />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </local:TreeViewLeafView>
+                    </DataTemplate> 
+                </ListView.ItemTemplate>
+            </ListView>
+        </DockPanel> 
+    </Grid>
 </UserControl>

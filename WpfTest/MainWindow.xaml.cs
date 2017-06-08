@@ -53,12 +53,14 @@ namespace WpfTest
 
 
 
-            var node = new FileTreeNode(@"C:\testfolder",null);
+            var node = new FileTreeNode(@"C:\testfolder", null);
+            //var node = new FileTreeNode(null);
+
+
             //var node = new TreeNode() { Name = "hest " };
             //node.Children.Add(new TreeNode() { Name = "Child" }); 
             //var second = new TreeNode() { Name = "Second Child" }; 
-            //second.Children.Add(new TreeNode() { Name = "grandchild" });
-
+            //second.Children.Add(new TreeNode() { Name = "grandchild" }); 
             //node.Children.Add(second);
 
             this.DataContext = this;
@@ -73,7 +75,7 @@ namespace WpfTest
             list.Add(new CRUDItemViewModel<CRUDItemBase>()); 
             list.Add(new CRUDItemViewModel<CRUDItemBase>()); 
 
-            var CRUD = new CRUDItemListViewModel(_aggregator, list);
+            var CRUD = new CRUDItemListViewModel<CRUDItemBase>(_aggregator, list);
             var cview = new CRUDItemList();
             cview.DataContext = CRUD;
             var win = new Window()

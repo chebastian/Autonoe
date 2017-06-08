@@ -1,6 +1,8 @@
 ﻿using MVVMHelpers;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,13 +53,13 @@ namespace HexView.Model
         {
 
         }
-
+ 
         public FileTreeNode(String root, ITreeNode parent)
         {
             rootDirectory = root;
             Name = rootDirectory;
             Parent = parent;
-            children = null;
+            children = null; 
         }
 
         //public FileTreeNode(String root)
@@ -86,7 +88,8 @@ namespace HexView.Model
                     }
                 }
 
-                HasChildren = children.Count > 0;
+                HasChildren = Directory.Exists(rootDirectory);
+                //HasChildren = children.Count > 0;
                 return children;
             }
 

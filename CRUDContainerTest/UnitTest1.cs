@@ -11,7 +11,7 @@ namespace CRUDContainerTest
 
     public class CIVMBase
     {
-        protected CRUDItemListViewModel vm;
+        protected CRUDItemListViewModel<CRUDItemBase> vm;
         protected List<CRUDItemViewModel<CRUDItemBase>> _original;
 
         public void init()
@@ -22,7 +22,7 @@ namespace CRUDContainerTest
             _original.Add(new CRUDItemViewModel<CRUDItemBase>(new CRUDItem<CRUDItemBase>(new CRUDItemBase(5))));
             _original.Add(new CRUDItemViewModel<CRUDItemBase>(new CRUDItem<CRUDItemBase>(new CRUDItemBase(5)))); 
 
-            vm = new CRUDItemListViewModel(agg,_original); 
+            vm = new CRUDItemListViewModel<CRUDItemBase>(agg,_original); 
         }
     }
 
