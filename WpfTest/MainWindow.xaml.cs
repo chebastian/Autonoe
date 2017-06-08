@@ -58,6 +58,7 @@ namespace WpfTest
             this.DataContext = this;
             //Tree.DataContext = new TreeNodeViewModel(node, this);
             FileTree = new ObservableCollection<TreeNodeViewModel>();
+
             FileTree.Add(new TreeNodeViewModel(node,this));
             //Tree.DataContext = TreeNodeViewModel.CreateFileTreeRoot(node,this);
 

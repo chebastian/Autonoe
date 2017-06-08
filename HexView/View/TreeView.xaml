@@ -58,7 +58,7 @@
                        VerticalContentAlignment="Stretch"
                        HorizontalContentAlignment="Stretch"
                        Background="Green" 
-                       ItemsSource="{Binding ChildViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       ItemsSource="{Binding SiblingViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Stretch"
                        DockPanel.Dock="Top"
                        >

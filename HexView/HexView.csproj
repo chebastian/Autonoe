@@ -91,14 +91,14 @@
     <Compile Include="View\TreeNodeChildView.xaml.cs">
       <DependentUpon>TreeNodeChildView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TreeStack\TreeStack.xaml.cs">
+      <DependentUpon>TreeStack.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TreeView.xaml.cs">
       <DependentUpon>TreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TreeViewLeafView.xaml.cs">
       <DependentUpon>TreeViewLeafView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TreeView\TreeStack.xaml.cs">
-      <DependentUpon>TreeStack.xaml</DependentUpon>
     </Compile>
     <Page Include="View\CloseableContainer.xaml">
       <SubType>Designer</SubType>
@@ -137,15 +137,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TreeStack\TreeStack.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TreeViewLeafView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TreeView\TreeStack.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

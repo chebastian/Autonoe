@@ -10,27 +10,22 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
+        </Grid.ColumnDefinitions> 
         <!--<ss:MatrixView Grid.Column="0"/>-->
         <DockPanel
             Grid.ColumnSpan="2"
-            Width="Auto"
-                 >
-            <views:TreeView  
-                Name="Tree"
-                Padding="15"
-                /> 
+            Width="Auto" >
         </DockPanel>
         <ListView 
-                Grid.Row="1"
-                Grid.Column="1"
+                Background="Aqua"
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
                 ItemsSource="{ 
                 Binding _test,
                 Mode= TwoWay,
