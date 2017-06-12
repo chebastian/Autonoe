@@ -23,15 +23,15 @@ namespace HexView.Viewmodel
         public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener)
         {
             _siblingViews = new ObservableCollection<TreeNodeViewModel>();
-            _siblings = node.Children;
+            //_siblings = node.Children; 
+            Node = node; 
             SiblingViews = new ObservableCollection<TreeNodeViewModel>();
 
-            Node = node; 
 
             _selectedListener = listener;
             History = new List<ITreeNode>();
- 
-            IsEmpty = _siblings.Any();
+
+            IsEmpty = node.Children.Any();
         } 
  
         public static TreeNodeViewModel CreateFileTreeRoot(ITreeNode node, IOnNodeSelected listener)
@@ -47,11 +47,19 @@ namespace HexView.Viewmodel
         public List<ITreeNode> History;
 
         private ITreeNode node;
-        public ITreeNode Node { get => node; set { SetSelectedNode(value); SetPropertyChanged(); } }
+        public ITreeNode Node { get => node; set { node = value; SetSelectedNode(value); SetPropertyChanged(); } }
+
+        public String RootName
+        {
+            get
+            {
+                return (Node as FileTreeNode).RootName;
+            }
+        }
 
         private void SetSelectedNode(ITreeNode selected)
         { 
-            if (SiblingViews == null)
+            if (_siblings == null)
             {
                 node = selected;
                 return;
@@ -108,15 +116,24 @@ namespace HexView.Viewmodel
             {
                 if(!_siblingViews.Any())
                 {
-                    foreach (var view in _siblings)
-                        _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
+                   // Task.Run(() => 
+                    { 
+                        foreach (var view in Node.Children)
+                            _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
 
-                    IsEmpty = _siblingViews.Any(); 
+                        IsEmpty = _siblingViews.Any();
+                    }
+
+                    //foreach (var view in Node.Children)
+                    //    _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
+
+                    //IsEmpty = _siblingViews.Any(); 
                 } 
                 return _siblingViews;
             }
             set { _siblingViews = value;SetPropertyChanged(); }
         }
+
  
         private ObservableCollection<TreeNodeViewModel> _siblingViews;
         private List<ITreeNode> _siblings;

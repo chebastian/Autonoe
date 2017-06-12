@@ -7,16 +7,33 @@
              mc:Ignorable="d" 
              Name="root"
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel Name="layoutRoot"
+    <Grid       Name="layoutRoot"
                 VerticalAlignment="Top"
                 >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
         <Button Content="x" 
+                Grid.Row="0"
+
                 Command="{Binding CloseCommand}" 
                 CommandParameter="{Binding ElementName=root,Path=DataContext}"
-                />
-        <ContentControl Content="{Binding Path=DataContext.TemplateControl,
+                >
+            <Button.InputBindings>
+                <KeyBinding 
+                    Key="W"
+                    Command="{Binding CloseCommand}" 
+                    CommandParameter="{Binding ElementName=root,Path=DataContext}" 
+                    />
+            </Button.InputBindings>
+        </Button>
+        <ContentControl 
+            Grid.Row="1"
+            Content="{Binding Path=DataContext.TemplateControl, 
                                     ElementName=layoutRoot}"
                                     Name="content" DataContext="{Binding ElementName=root, Path=DataContext}"
                         />
-    </StackPanel>
+    </Grid>
 </UserControl>

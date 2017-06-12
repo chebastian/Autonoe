@@ -36,13 +36,12 @@
         </Grid.RowDefinitions>
             <TextBlock 
                 Grid.Row="0"
-                Text="{Binding Node.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                Text="{Binding RootName,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}"
                        DockPanel.Dock="Top"
                        /> 
-        <DockPanel
+        <Grid
                     Grid.Row="1"
                     HorizontalAlignment="Stretch" 
-                    LastChildFill="True"
                     Background="Gainsboro"
                     Name="root"
                     d:DataContext="{d:DesignInstance Type=vm:TreeNodeViewModel}">
@@ -50,19 +49,21 @@
                 Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToHidden}}"
                 Text="Nothing to show here"
                 />
-            <ListView  
+            <ListBox  
                        Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToVisible}}"
                        SelectedValue="{Binding NodeSelected,
                        Mode=TwoWay,
                        UpdateSourceTrigger=PropertyChanged}"
-                       VerticalContentAlignment="Stretch"
                        HorizontalContentAlignment="Stretch"
+                       MinWidth="300"
+                       Height="300"
+                       VirtualizingPanel.IsVirtualizing="True"
                        Background="Green" 
                        ItemsSource="{Binding SiblingViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Stretch"
-                       DockPanel.Dock="Top"
+                       DockPanel.Dock="Top" 
                        >
-                <ListView.ItemTemplate>
+                <ListBox.ItemTemplate>
                     <DataTemplate> 
                         <local:TreeViewLeafView 
                             DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -78,8 +79,8 @@
                             </i:Interaction.Triggers>
                         </local:TreeViewLeafView>
                     </DataTemplate> 
-                </ListView.ItemTemplate>
-            </ListView>
-        </DockPanel> 
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid> 
     </Grid>
 </UserControl>

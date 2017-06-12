@@ -53,7 +53,7 @@ namespace WpfTest
 
 
 
-            var node = new FileTreeNode(@"C:\testfolder", null);
+            var node = new FileTreeNode(@"C:\", null);
 
             this.DataContext = this;
             //Tree.DataContext = new TreeNodeViewModel(node, this);

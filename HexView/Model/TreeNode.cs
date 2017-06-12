@@ -53,11 +53,24 @@ namespace HexView.Model
         {
 
         }
+
+        public string RootName
+        {
+            get
+            {
+                return rootDirectory;
+            }
+        }
  
         public FileTreeNode(String root, ITreeNode parent)
         {
             rootDirectory = root;
-            Name = rootDirectory;
+
+            if (Directory.Exists(rootDirectory))
+                Name = new DirectoryInfo(rootDirectory).Name;
+            else
+                Name = Path.GetFileName(rootDirectory);
+
             Parent = parent;
             children = null; 
         }
@@ -83,8 +96,15 @@ namespace HexView.Model
                     children = new List<ITreeNode>();
                     if (Directory.Exists(rootDirectory))
                     {
-                        children.AddRange( Directory.GetDirectories(rootDirectory).Select(x => new FileTreeNode(x,this)) ); 
-                        children.AddRange( Directory.GetFiles(rootDirectory).Select(x => new FileTreeNode(x,this)) ); 
+                        try
+                        { 
+                            children.AddRange( Directory.GetDirectories(rootDirectory).Select(x => new FileTreeNode(x,this)) ); 
+                            children.AddRange( Directory.GetFiles(rootDirectory).Select(x => new FileTreeNode(x,this)) ); 
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Cannot read from file or folder");
+                        }
                     }
                 }
 
