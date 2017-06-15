@@ -15,8 +15,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <conv:BoolToColorConverter x:Key="boolToColor">
-                <conv:BoolToColorConverter.TrueValue>HotPink</conv:BoolToColorConverter.TrueValue>
-                <conv:BoolToColorConverter.FalseValue>White</conv:BoolToColorConverter.FalseValue>
+                <conv:BoolToColorConverter.TrueValue>#c0fefe</conv:BoolToColorConverter.TrueValue>
+                <conv:BoolToColorConverter.FalseValue>#5afe57</conv:BoolToColorConverter.FalseValue>
             </conv:BoolToColorConverter>
         </ResourceDictionary>
     </UserControl.Resources>

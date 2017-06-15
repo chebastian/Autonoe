@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -20,12 +21,18 @@ namespace HexView.Viewmodel
 
         IOnNodeSelected _selectedListener;
 
+        public TreeNodeViewModel()
+        {
+
+        }
+
         public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener)
         {
             _siblingViews = new ObservableCollection<TreeNodeViewModel>();
             //_siblings = node.Children; 
             Node = node; 
             SiblingViews = new ObservableCollection<TreeNodeViewModel>();
+            IsLoaded = false;
 
 
             _selectedListener = listener;
@@ -114,25 +121,53 @@ namespace HexView.Viewmodel
         {
             get
             {
-                if(!_siblingViews.Any())
+                if(!_siblingViews.Any() && !IsLoaded)
                 {
                    // Task.Run(() => 
-                    { 
-                        foreach (var view in Node.Children)
-                            _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
+                    {
+                        //foreach (var view in Node.Children)
+                        //    _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
+                        //Task<List<TreeNodeViewModel>> task = GetChildrenAsync();
+                        //var list = task;
+                        doLoadChildren();
 
                         IsEmpty = _siblingViews.Any();
-                    }
-
-                    //foreach (var view in Node.Children)
-                    //    _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
-
-                    //IsEmpty = _siblingViews.Any(); 
+                    } 
                 } 
                 return _siblingViews;
             }
             set { _siblingViews = value;SetPropertyChanged(); }
         }
+
+
+        private bool isLoading;
+        public bool IsLoading { get => isLoading; set { isLoading = value; SetPropertyChanged(); } }
+
+        public bool IsLoaded { get; private set; }
+
+        public async void doLoadChildren()
+        {
+            isLoading = true;
+
+            Task<List<TreeNodeViewModel>> task = GetChildrenAsync();
+            var list = new List<TreeNodeViewModel>();
+            list = await task;
+            IsLoaded = true;
+
+            isLoading = false; 
+            SiblingViews = new ObservableCollection<TreeNodeViewModel>(list);
+            IsEmpty = SiblingViews.Any();
+        }
+
+        private async Task<List<TreeNodeViewModel>> GetChildrenAsync()
+        {
+            var list = new List<TreeNodeViewModel>();
+            foreach (var view in Node.Children)
+                list.Add(new TreeNodeViewModel(view, this._selectedListener));
+
+            return list;
+        }
+
 
  
         private ObservableCollection<TreeNodeViewModel> _siblingViews;

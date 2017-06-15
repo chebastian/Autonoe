@@ -34,7 +34,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-            <TextBlock 
+        <TextBlock 
                 Grid.Row="0"
                 Text="{Binding RootName,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}"
                        DockPanel.Dock="Top"
@@ -49,6 +49,9 @@
                 Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToHidden}}"
                 Text="Nothing to show here"
                 />
+            <TextBlock
+                Visibility="{Binding IsLoading,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToHidden}}"
+                Grid.Row="1" Text="...Loading"/>
             <ListBox  
                        Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToVisible}}"
                        SelectedValue="{Binding NodeSelected,

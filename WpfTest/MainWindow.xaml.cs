@@ -97,8 +97,13 @@ namespace WpfTest
 
         public void onSelected(ITreeNode node)
         {
+            var tvm = new TreeNodeViewModel(node,this);
+            SelectedTree = tvm;
             FileTree.Add(new TreeNodeViewModel(node,this)); 
         }
+
+        private TreeNodeViewModel _selectedVM;
+        public TreeNodeViewModel SelectedTree { get => _selectedVM; set { _selectedVM = value; SetPropertyChanged(); } }
 
         public ICommand OnClose
         {

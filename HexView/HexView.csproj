@@ -72,6 +72,9 @@
     <Compile Include="View\CloseableContainer.xaml.cs">
       <DependentUpon>CloseableContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\FilesView.xaml.cs">
+      <DependentUpon>FilesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MatrixCellView.xaml.cs">
       <DependentUpon>MatrixCellView.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
       <DependentUpon>TreeViewLeafView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\CloseableContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FilesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
