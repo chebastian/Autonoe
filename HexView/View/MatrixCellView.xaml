@@ -35,7 +35,7 @@
             Background="{Binding Marked,Mode=TwoWay,
             UpdateSourceTrigger=PropertyChanged,
             Converter={StaticResource markConverter}}"
-            Text="{Binding MyValue.Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding MyValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             FontFamily="Consolas"/> 
     </Border>
 

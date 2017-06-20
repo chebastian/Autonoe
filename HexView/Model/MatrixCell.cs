@@ -78,13 +78,14 @@ namespace HexView
     public class MatrixCell  : MVVMHelpers.ViewModelBase
     {
         protected string _val;
+        private string oldValue;
         private bool _highlight;
         private bool _marked;
-        private ObservableField<string> _myValue = new ObservableField<string>("FF");
+        //private ObservableField<string> _myValue = new ObservableField<string>("FF");
+        private string _myValue = String.Empty;
 
         public MatrixCell()
         {
-            MyValue = new ObservableField<string>("FA");
             IsHighlighted = new ObservableField<bool>(false);
         }
 
@@ -111,7 +112,10 @@ namespace HexView
             {
                 return new MyCommandWrapper(x =>
                 {
-                    //IsHighlighted = true;
+                    //oldValue = MyValue.Value;
+                    //byte newValue = MyValue.Value;
+                    //Byte.TryParse(oldValue,out newValue);
+                   // MyValue.Set(String.Format("{0}",b));
                     IsHighlighted.Set(true); 
                 });
             }
@@ -123,7 +127,7 @@ namespace HexView
             {
                 return new MyCommandWrapper(x =>
                 {
-                    //IsHighlighted = false;
+                    //MyValue.Set(oldValue);
                     IsHighlighted.Set(false);
                 });
             }
@@ -134,35 +138,21 @@ namespace HexView
             get;set;
         }
 
-        //public bool IsHighlighted
-        //{
-        //    get => _highlight;
-        //    set
-        //    {
-        //        _highlight = value;
-        //        SetPropertyChanged();
-        //    }
-        //}
  
-        //public String MyValue
-        public ObservableField<String> MyValue
+        public String MyValue
         {
-            //get
-            //{
-            //    //return new ObservableValue<string>( GetMyValue() );
-            //    return _myValue;
-            //}
-            //set
-            //{
-            //    _myValue = value;
-            //    //SetPropertyChanged();
-            //}
-            set;get;
+            set {
+                _myValue = value;
+                SetPropertyChanged();
+            }
+            get => GetMyValue();
         }
 
         public bool Marked { get => _marked;
             set { _marked = value; SetPropertyChanged(); }
         }
+
+        public Dictionary<char, byte> HexDict { get; private set; }
     }
 
     public class CellProxy : MatrixCell
@@ -174,15 +164,14 @@ namespace HexView
         {
             _provider = provider;
             _offset = offset;
-            MyValue.Value = _provider.ReadCellValue(_offset).ToString("X2");
+            //MyValue.Value = _provider.ReadCellValue(_offset).ToString("X2");
         }
 
 
         public override string GetMyValue()
         {
             var bytes = _provider.ReadCellValue(_offset);
-            //var res = bytes.ToList().Skip(_offset).Take(16)
-            //    .Select(x => x.ToString("X2")).Aggregate<String>((x, y) => x + " " + y);
+            Console.WriteLine(_offset);
 
             return bytes.ToString("X2");
         }

@@ -109,7 +109,7 @@ namespace HexView
 
         public void Notify(CellSelectedEvent evt)
         {
-            evt.matrixCell.MyValue.Value = "DD";
+            //evt.matrixCell.MyValue.Value = "DD";
         }
 
         String _fileSize;

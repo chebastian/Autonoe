@@ -23,15 +23,25 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="{Binding Position}"/>
         <Button Grid.Row="2" Content="Down"/>
- 
-        <!--<ListView Grid.Row="1" ItemsSource="{Binding MyData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+
+        <ListView 
+            Grid.Row="1"
+            VirtualizingPanel.IsVirtualizing="True"
+            ItemsSource="{Binding MyData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+            >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding MyValue,UpdateSourceTrigger=PropertyChanged}"/>
+                </DataTemplate> 
+            </ListView.ItemTemplate>
+        </ListView>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <TextBlock  Text="a"/> 
             <TextBlock  Text="a"/> 
             <TextBlock  Text="a"/> 
             <TextBlock  Text="{Binding FileSize,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock  Text="a_"/> 
-        </StackPanel>-->
+        </StackPanel>
         <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding MyData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -51,7 +61,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>-->
 
-        <ListBox  Name ="List" Grid.Row="1" HorizontalAlignment="Center"
+        <!--<ListBox  Name ="List" Grid.Row="1" HorizontalAlignment="Center"
                   ItemsSource="{Binding MyData}" SelectionMode="Extended"
                   VirtualizingPanel.IsVirtualizing="True"
                   PreviewMouseDown="List_PreviewMouseDown"
@@ -86,7 +96,7 @@
                         />
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
 
     </Grid>
 </UserControl>
