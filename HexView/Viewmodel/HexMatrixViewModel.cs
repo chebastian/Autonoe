@@ -68,7 +68,9 @@ namespace HexView
             foreach (var i in Enumerable.Range(0, 256))
             {
                 tokens.Add((byte)i, i.ToString("X2"));
-            } 
+            }
+
+            FileSize = "FFF";
         }
 
         private void loadBytes(byte[] arr)
@@ -110,6 +112,18 @@ namespace HexView
             evt.matrixCell.MyValue.Value = "DD";
         }
 
+        String _fileSize;
+        public String FileSize
+        {
+            get => "This is my string";
+
+            set
+            {
+                _fileSize = value;
+                SetPropertyChanged();
+            }
+        }
+
         public ObservableCollection<MatrixCell> MyData
         {
             get => _data;
@@ -137,6 +151,11 @@ namespace HexView
 
                 _isHighlighting = true;
             });
+        }
+
+        public void Update()
+        {
+            SetPropertyChanged("Matrix");
         }
 
         public ICommand MouseUpCommand

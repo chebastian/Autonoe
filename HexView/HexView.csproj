@@ -63,6 +63,8 @@
     <Compile Include="Model\ObservableValue.cs" />
     <Compile Include="Model\TreeNode.cs" />
     <Compile Include="Utils\Converters\BoolToColorConverter.cs" />
+    <Compile Include="Utils\EventExtensions.cs" />
+    <Compile Include="Viewmodel\FileTreeViewModel.cs" />
     <Compile Include="Viewmodel\HexMatrixViewModel.cs" />
     <Compile Include="Interface\ICellProvider.cs" />
     <Compile Include="Interface\IEventSubscriber.cs" />

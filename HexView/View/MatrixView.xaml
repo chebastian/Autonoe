@@ -23,14 +23,22 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="{Binding Position}"/>
         <Button Grid.Row="2" Content="Down"/>
-        <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding MyData}">
+ 
+        <!--<ListView Grid.Row="1" ItemsSource="{Binding MyData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock  Text="a"/> 
+            <TextBlock  Text="a"/> 
+            <TextBlock  Text="a"/> 
+            <TextBlock  Text="{Binding FileSize,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock  Text="a_"/> 
+        </StackPanel>-->
+        <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding MyData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid 
+                    <WrapPanel 
                                  MinWidth="350"
                                  MaxWidth="500"
-                                 Columns="{Binding Width}"
-                                 Rows="{Binding Height}"/>
+                        />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -42,8 +50,10 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>-->
+
         <ListBox  Name ="List" Grid.Row="1" HorizontalAlignment="Center"
                   ItemsSource="{Binding MyData}" SelectionMode="Extended"
+                  VirtualizingPanel.IsVirtualizing="True"
                   PreviewMouseDown="List_PreviewMouseDown"
                   MouseMove="List_MouseMove"
                   >
@@ -77,5 +87,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
     </Grid>
 </UserControl>

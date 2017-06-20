@@ -52,10 +52,15 @@
                     </DataTemplate>
                 </ListView.ItemTemplate> 
         </ListView>
-        <views:FilesView 
+        <ss:MatrixView
+            Name="Hex"
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            DataContext="{Binding SelectedTree}"/>
+            DataContext="{Binding HexVM,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+        <!--<views:FilesView 
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            DataContext="{Binding SelectedTree}"/>-->
         <ListView 
                 Grid.Row="0"
                 Grid.ColumnSpan="2"

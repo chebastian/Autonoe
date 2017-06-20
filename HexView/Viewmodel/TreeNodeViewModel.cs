@@ -113,8 +113,7 @@ namespace HexView.Viewmodel
         private void DoClick(TreeNodeViewModel node)
         {
             if (_selectedListener != null)
-                _selectedListener.onSelected(node.Node);
-
+                _selectedListener.onSelected(node.Node); 
         }
 
         public ObservableCollection<TreeNodeViewModel> SiblingViews

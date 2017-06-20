@@ -1,6 +1,7 @@
 ﻿using CRUDContainer.Model;
 using CRUDContainer.View;
 using CRUDContainer.ViewModel;
+using HexView;
 using HexView.Model;
 using HexView.Viewmodel;
 using MVVMCore.Events;
@@ -13,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -79,8 +81,12 @@ namespace WpfTest
                 Content = cview
             };
 
-            win.Show(); 
+            _aggregator.GetEvent<NodeSelectedEvent>().Subscribe(x => Console.WriteLine("TESTING"));
 
+            HexVM = new HexMatrixViewModel(File.OpenRead("test.jpg"));
+
+
+            win.Show(); 
 
         //_test.Add(new NodeStackViewModel(FileTree));
     }
@@ -99,10 +105,30 @@ namespace WpfTest
         {
             var tvm = new TreeNodeViewModel(node,this);
             SelectedTree = tvm;
-            FileTree.Add(new TreeNodeViewModel(node,this)); 
+            FileTree.Add(new TreeNodeViewModel(node,this));
+            _aggregator.GetEvent<NodeSelectedEvent>().Publish(new NodeSelectedEventArg(node)); 
+
+            var name = (node as FileTreeNode).RootName;
+            if(File.Exists(name))
+            { 
+                HexVM = new HexMatrixViewModel(File.OpenRead(name)); 
+            }
+        }
+
+        private HexMatrixViewModel _hexVm;
+        public HexMatrixViewModel HexVM
+        {
+            get => _hexVm;
+            set
+            {
+                _hexVm = value;
+                _hexVm.Update();
+                SetPropertyChanged();
+            }
         }
 
         private TreeNodeViewModel _selectedVM;
+
         public TreeNodeViewModel SelectedTree { get => _selectedVM; set { _selectedVM = value; SetPropertyChanged(); } }
 
         public ICommand OnClose

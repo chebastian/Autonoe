@@ -24,9 +24,8 @@ namespace HexView
         public MatrixView()
         {
             InitializeComponent();
+            DataContext = new HexMatrixViewModel(File.OpenRead("test.jpg"));
 
-            var reader = File.OpenRead("./test.jpg");
-            this.DataContext = new HexMatrixViewModel(reader);
             //var rows = 16;
             //var cols = 16;
             //for(var i = 0; i < rows; i++)
