@@ -21,13 +21,16 @@ namespace HexView
         private FileStream _stream;
         private ObservableCollection<MatrixCell> _data;
 
+        public ObservableField<int> LoadedRows { get; set; } = new ObservableField<int>(20);
+        public ObservableField<int> RowsToLoad { get; set; } = new ObservableField<int>(100);
+
         public int Width => 16;
         public int Height => 16;
 
         public HexMatrixViewModel()
         {
             init();
-            loadBytes(new byte[] { 255, 255, 123 });
+            //loadBytes(new byte[] { 255, 255, 123 });
         } 
 
         public HexMatrixViewModel(byte[] bytes)
@@ -43,22 +46,62 @@ namespace HexView
             _stream = stream;
 
             MyData = new ObservableCollection<MatrixCell>();
-            //for (var i = 0; i < stream.Length; i += 16)
 
-            for (var i = 0; i < stream.Length/16; i++)
+            for (var i = 0; i < stream.Length/Width; i++)
             {
-                Matrix.Add(new MatrixRow(this,i,16));
-                //MyData.Add(new CellProxy(this,i));
+                Matrix.Add(new MatrixRow(this,i,Width));
+            } 
+
+            FileSize = String.Format("File Size: {0}", Matrix.Count * Width);
+        }
+
+        public HexMatrixViewModel(List<MatrixRow> rows)
+        {
+            MyData = new ObservableCollection<MatrixCell>();
+            init();
+
+            foreach (var row in rows)
+                Matrix.Add(row); 
+
+            FileSize = String.Format("File Size: {0}", Matrix.Count * Width);
+        }
+
+        public void Clear()
+        {
+            Matrix.Clear();
+        }
+
+        public List<MatrixRow> loadStream(FileStream stream)
+        {
+            if (_stream != null)
+                _stream.Close();
+
+            RowsToLoad.Set( (int) (stream.Length / Width) );
+            LoadedRows.Set(0);
+            _stream = stream;
+            var res = new List<MatrixRow>();
+            for (var i = 0; i < stream.Length/Width; i++)
+            {
+                res.Add(new MatrixRow(this,i,Width));
+                LoadedRows.Set(i);
             }
 
-            for (var i = 0; i < stream.Length; i++)
+            FileSize = String.Format("File Size: {0}", res.Count * Width); 
+
+            return res;
+        }
+
+        public async void loadStreamAsync(FileStream stream)
+        {
+            var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            await Task.Factory.StartNew<List<MatrixRow>>(() =>
             {
-                MyData.Add(new CellProxy(this, i));
-            }
+                return loadStream(stream);
+            }).ContinueWith(x =>
+            {
+                Matrix = new ObservableCollection<MatrixRow>(x.Result);
 
-
-                //Matrix.Add(new CellProxy(this, i));
-            //Matrix.Add(new MatrixRow())
+            },scheduler);
         }
 
         public void init()
@@ -76,9 +119,9 @@ namespace HexView
 
         private void loadBytes(byte[] arr)
         {
-            var rows = bytes.Length / 16;
+            var rows = bytes.Length / Width;
 
-            for (var i = 0; i < bytes.Length; i+= 16)
+            for (var i = 0; i < bytes.Length; i+= Width)
             {
                 var thevalue = tokens[bytes[i]];
                 //Matrix.Add(new CellProxy(this,i));
@@ -94,6 +137,12 @@ namespace HexView
                 return (byte)_stream.ReadByte();
                 //return arr[offset];
             }
+            else
+            {
+                throw new Exception("Stream null, cannot read file");
+            }
+
+
             return 10; 
         }
 
@@ -116,7 +165,7 @@ namespace HexView
         String _fileSize;
         public String FileSize
         {
-            get => "This is my string";
+            get => _fileSize;
 
             set
             {

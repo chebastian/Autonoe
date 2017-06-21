@@ -110,9 +110,22 @@ namespace WpfTest
 
             var name = (node as FileTreeNode).RootName;
             if(File.Exists(name))
-            { 
-                HexVM = new HexMatrixViewModel(File.OpenRead(name)); 
+            {
+
+                loadFile(name);
+                //HexVM = new HexMatrixViewModel(File.OpenRead(name)); 
             }
+        }
+
+        private void loadFile(string name)
+        {
+            loadFileAsync(name);
+        }
+
+        private async void loadFileAsync(string name)
+        {
+            HexVM = new HexMatrixViewModel();
+            HexVM.loadStreamAsync(File.OpenRead(name));
         }
 
         private HexMatrixViewModel _hexVm;

@@ -24,24 +24,54 @@
         <Button Grid.Row="0" Content="{Binding Position}"/>
         <Button Grid.Row="2" Content="Down"/>
 
-        <ListView 
-            Grid.Row="1"
-            VirtualizingPanel.IsVirtualizing="True"
-            ItemsSource="{Binding MyData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-            >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding MyValue,UpdateSourceTrigger=PropertyChanged}"/>
-                </DataTemplate> 
-            </ListView.ItemTemplate>
+        <DockPanel 
+                Grid.Row="1"
+                    >
+            <ProgressBar 
+                Height="10"
+                Background="White"
+                Foreground="Green"
+                DockPanel.Dock="Top"
+                Maximum="{Binding RowsToLoad.Value,UpdateSourceTrigger=PropertyChanged}"
+                Value="{Binding LoadedRows.Value,UpdateSourceTrigger=PropertyChanged}"
+                >
+            </ProgressBar>
+                <TextBlock Text="{Binding FileSize}"
+                       DockPanel.Dock="Top"
+                       />
+            <ListView 
+                DockPanel.Dock="Top"
+                VirtualizingPanel.IsVirtualizing="True"
+                VirtualizingPanel.CacheLength="20"
+                ItemsSource="{Binding Matrix,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Label 
+                                DockPanel.Dock="Left"
+                                Content="{Binding RowNumber.Value}" 
+                                />
+                            <ListView 
+                                DockPanel.Dock="Left"
+                                ItemsSource="{Binding Cells,UpdateSourceTrigger=PropertyChanged}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MyValue,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontFamily="Consolas"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView> 
+                        </DockPanel>
+                    </DataTemplate> 
+                </ListView.ItemTemplate>
         </ListView>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock  Text="a"/> 
-            <TextBlock  Text="a"/> 
-            <TextBlock  Text="a"/> 
-            <TextBlock  Text="{Binding FileSize,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock  Text="a_"/> 
-        </StackPanel>
+            
+        </DockPanel>
         <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding MyData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
