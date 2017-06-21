@@ -44,6 +44,7 @@ namespace HexView
 
             MyData = new ObservableCollection<MatrixCell>();
             //for (var i = 0; i < stream.Length; i += 16)
+
             for (var i = 0; i < stream.Length/16; i++)
             {
                 Matrix.Add(new MatrixRow(this,i,16));
