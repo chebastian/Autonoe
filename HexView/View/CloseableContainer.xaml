@@ -12,12 +12,13 @@
                 >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Button Content="x" 
-                Grid.Row="0"
-
+        <Button 
+                HorizontalAlignment="Stretch"
+                Content="[x" 
+                Grid.Row="0" 
                 Command="{Binding CloseCommand}" 
                 CommandParameter="{Binding ElementName=root,Path=DataContext}"
                 >
@@ -30,6 +31,7 @@
             </Button.InputBindings>
         </Button>
         <ContentControl 
+            VerticalAlignment="Stretch"
             Grid.Row="1"
             Content="{Binding Path=DataContext.TemplateControl, 
                                     ElementName=layoutRoot}"

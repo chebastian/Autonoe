@@ -16,7 +16,7 @@ namespace HexView.Viewmodel
     {
         public interface IOnNodeSelected
         {
-            void onSelected(ITreeNode node);
+            void onSelected(ITreeNode node,TreeNodeViewModel sender);
         }
 
         IOnNodeSelected _selectedListener;
@@ -64,6 +64,17 @@ namespace HexView.Viewmodel
             }
         }
 
+        public void LoadNode(ITreeNode node)
+        {
+            IsLoaded = false;
+            IsEmpty = node.Children.Any();
+            SiblingViews.Clear();
+            Node = node;
+            foreach (var child in node.Children)
+                SiblingViews.Add(new TreeNodeViewModel(child,_selectedListener));
+
+        }
+ 
         private void SetSelectedNode(ITreeNode selected)
         { 
             if (_siblings == null)
@@ -74,8 +85,6 @@ namespace HexView.Viewmodel
 
             node = selected;
             SiblingViews.Clear();
-            //foreach (var child in Node.Children)
-            //    ChildViews.Add(new TreeNodeViewModel(child,_selectedListener));
         }
 
         public ICommand Click
@@ -113,7 +122,8 @@ namespace HexView.Viewmodel
         private void DoClick(TreeNodeViewModel node)
         {
             if (_selectedListener != null)
-                _selectedListener.onSelected(node.Node); 
+                _selectedListener.onSelected(node.Node,this); 
+
         }
 
         public ObservableCollection<TreeNodeViewModel> SiblingViews

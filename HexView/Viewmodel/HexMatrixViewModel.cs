@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using Prism.Events;
+using System.Threading;
 
 namespace HexView
 {
@@ -89,17 +90,52 @@ namespace HexView
             FileSize = String.Format("File Size: {0}", res.Count * Width); 
 
             return res;
-        }
+        } 
 
-        public async void loadStreamAsync(FileStream stream)
+        public async void loadStreamAsync(FileStream stream,CancellationTokenSource token)
         {
+
+            Matrix.Clear();
+            if( _cancelLoading != null )
+            {
+                _cancelLoading.Cancel();
+            }
+
+            _cancelLoading = token;
+
             var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
             await Task.Factory.StartNew<List<MatrixRow>>(() =>
             {
-                return loadStream(stream);
-            }).ContinueWith(x =>
+                if (_stream != null)
+                    _stream.Close();
+
+                RowsToLoad.Set( (int) (stream.Length / Width) );
+                LoadedRows.Set(0);
+                _stream = stream;
+                var res = new List<MatrixRow>();
+                var length = stream.Length / Width;
+                for (var i = 0; i < length; i++)
+                {
+                    token.Token.ThrowIfCancellationRequested();
+                    res.Add(new MatrixRow(this,i,Width));
+                    LoadedRows.Set(i);
+
+                }
+
+                FileSize = String.Format("File Size: {0}", res.Count * Width); 
+
+                return res;
+
+            },token.Token).ContinueWith(x =>
             {
-                Matrix = new ObservableCollection<MatrixRow>(x.Result);
+                try
+                { 
+                    Matrix = new ObservableCollection<MatrixRow>(x.Result);
+                }
+                catch(AggregateException e)
+                {
+                    var mess = e.Message;
+                }
 
             },scheduler);
         }
@@ -231,6 +267,7 @@ namespace HexView
 
         Point _pos;
         private bool _isHighlighting;
+        private CancellationTokenSource _cancelLoading;
 
         public Point Position { get => _pos; set { _pos = value; SetPropertyChanged(); } }
     }

@@ -19,6 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -101,7 +102,7 @@ namespace WpfTest
             }
         }
 
-        public void onSelected(ITreeNode node)
+        public void onSelected(ITreeNode node,TreeNodeViewModel sender)
         {
             var tvm = new TreeNodeViewModel(node,this);
             SelectedTree = tvm;
@@ -124,8 +125,9 @@ namespace WpfTest
 
         private async void loadFileAsync(string name)
         {
-            HexVM = new HexMatrixViewModel();
-            HexVM.loadStreamAsync(File.OpenRead(name));
+            //TODO cancel here 
+            //HexVM = new HexMatrixViewModel();
+            HexVM.loadStreamAsync(File.OpenRead(name), new CancellationTokenSource());
         }
 
         private HexMatrixViewModel _hexVm;

@@ -15,8 +15,8 @@
                 <Setter Property="Foreground" Value="Black"/>
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="True">
-                        <Setter Property="FontSize" Value="18"/> 
-                        <Setter Property="Foreground" Value="PeachPuff"/> 
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="Foreground" Value="PeachPuff"/>
                     </Trigger>
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="FontSize" Value="28"/>
@@ -31,20 +31,20 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock 
                 Grid.Row="0"
                 Text="{Binding RootName,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}"
                        DockPanel.Dock="Top"
-                       /> 
+                       />
         <Grid
-                    Grid.Row="1"
-                    HorizontalAlignment="Stretch" 
-                    Background="Gainsboro"
-                    Name="root"
-                    d:DataContext="{d:DesignInstance Type=vm:TreeNodeViewModel}">
+            Grid.Row="1"
+            HorizontalAlignment="Stretch" 
+            Background="Gainsboro"
+            Name="root"
+            d:DataContext="{d:DesignInstance Type=vm:TreeNodeViewModel}">
             <TextBlock 
                 Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToHidden}}"
                 Text="Nothing to show here"
@@ -52,22 +52,23 @@
             <TextBlock
                 Visibility="{Binding IsLoading,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToHidden}}"
                 Grid.Row="1" Text="...Loading"/>
-            <ListBox  
+            <ListView  
                        Visibility="{Binding IsEmpty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource boolToVisible}}"
                        SelectedValue="{Binding NodeSelected,
                        Mode=TwoWay,
                        UpdateSourceTrigger=PropertyChanged}"
+                       Grid.Row="0"
+                       VerticalAlignment="Stretch"
                        HorizontalContentAlignment="Stretch"
                        MinWidth="300"
-                       Height="300"
                        VirtualizingPanel.IsVirtualizing="True"
                        Background="Green" 
                        ItemsSource="{Binding SiblingViews, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Stretch"
                        DockPanel.Dock="Top" 
                        >
-                <ListBox.ItemTemplate>
-                    <DataTemplate> 
+                <ListView.ItemTemplate>
+                    <DataTemplate>
                         <local:TreeViewLeafView 
                             DataContext="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             >
@@ -81,9 +82,9 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </local:TreeViewLeafView>
-                    </DataTemplate> 
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid> 
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

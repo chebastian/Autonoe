@@ -10,19 +10,18 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions> 
-        <!--<ss:MatrixView Grid.Column="0"/>-->
-        <DockPanel
+        <GridSplitter 
             Grid.ColumnSpan="2"
-            Width="Auto" >
-        </DockPanel>
-        <ListView 
+            Grid.Row="1" 
+            Height="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            />
+        <!--<ListView 
                 Background="Aqua"
                 Grid.Row="0"
                 Grid.ColumnSpan="2"
@@ -51,10 +50,10 @@
                     </views:CloseableContainer>
                     </DataTemplate>
                 </ListView.ItemTemplate> 
-        </ListView>
+        </ListView>-->
         <ss:MatrixView
             Name="Hex"
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.ColumnSpan="2"
             DataContext="{Binding HexVM,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
         <!--<views:FilesView 
@@ -80,6 +79,7 @@
                     <DataTemplate>
                     <views:CloseableContainer
                             HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
                             DataContext="{Binding}"
                             CloseCommand="{Binding Path=DataContext.OnClose,
                             RelativeSource={RelativeSource Mode=FindAncestor, 
@@ -91,6 +91,6 @@
                     </views:CloseableContainer>
                     </DataTemplate>
                 </ListView.ItemTemplate> 
-            </ListView>
+            </ListView> 
     </Grid> 
 </Window>

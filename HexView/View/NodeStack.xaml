@@ -8,10 +8,8 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=vm:NodeStackViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel Orientation="Vertical"> 
+    <Grid>
             <ListView 
-                Grid.Row="1"
-                Grid.ColumnSpan="2"
                 VerticalContentAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 ItemsSource="{
@@ -20,11 +18,11 @@
                 ,UpdateSourceTrigger=PropertyChanged
                 }"
                 >
-            <ListView.ItemsPanel>
+            <!--<ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+            </ListView.ItemsPanel>-->
                 <ListView.ItemTemplate>
                     <DataTemplate>
                     <local:CloseableContainer
@@ -40,6 +38,6 @@
                     </local:CloseableContainer>
                     </DataTemplate>
                 </ListView.ItemTemplate> 
-            </ListView>
-    </StackPanel>
+            </ListView> 
+    </Grid>
 </UserControl>
