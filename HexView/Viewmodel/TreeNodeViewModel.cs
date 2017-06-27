@@ -138,7 +138,7 @@ namespace HexView.Viewmodel
                         //    _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
                         //Task<List<TreeNodeViewModel>> task = GetChildrenAsync();
                         //var list = task;
-                        doLoadChildren();
+                        loadChildren();
 
                         IsEmpty = _siblingViews.Any();
                     } 
@@ -154,7 +154,7 @@ namespace HexView.Viewmodel
 
         public bool IsLoaded { get; private set; }
 
-        public async void doLoadChildren()
+        public async void loadChildren()
         {
             isLoading = true;
 
