@@ -62,7 +62,7 @@ namespace WpfTest
             //Tree.DataContext = new TreeNodeViewModel(node, this);
             FileTree = new ObservableCollection<TreeNodeViewModel>();
 
-            FileTree.Add(new TreeNodeViewModel(node,this));
+            FileTree.Add(new TreeNodeViewModel(node,this,new FileTreeLoader()));
             //Tree.DataContext = TreeNodeViewModel.CreateFileTreeRoot(node,this);
 
             _test = new List<NodeStackViewModel>();
@@ -104,17 +104,15 @@ namespace WpfTest
 
         public void onSelected(ITreeNode node,TreeNodeViewModel sender)
         {
-            var tvm = new TreeNodeViewModel(node,this);
+            var tvm = new TreeNodeViewModel(node,this,new FileTreeLoader());
             SelectedTree = tvm;
-            FileTree.Add(new TreeNodeViewModel(node,this));
+            FileTree.Add(tvm);
             _aggregator.GetEvent<NodeSelectedEvent>().Publish(new NodeSelectedEventArg(node)); 
 
             var name = (node as FileTreeNode).RootName;
             if(File.Exists(name))
-            {
-
+            { 
                 loadFile(name);
-                //HexVM = new HexMatrixViewModel(File.OpenRead(name)); 
             }
         }
 

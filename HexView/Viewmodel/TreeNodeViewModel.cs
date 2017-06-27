@@ -26,11 +26,12 @@ namespace HexView.Viewmodel
 
         }
 
-        public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener)
+        public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener,ITreeLoader loader)
         {
-            _siblingViews = new ObservableCollection<TreeNodeViewModel>();
+            _loader = loader;
+            _siblingViews = new ObservableCollection<ITreeNode>();
             Node = node; 
-            SiblingViews = new ObservableCollection<TreeNodeViewModel>();
+            SiblingViews = new ObservableCollection<ITreeNode>();
             IsLoaded = false;
 
 
@@ -39,17 +40,9 @@ namespace HexView.Viewmodel
 
             IsEmpty = node.Children.Any();
         } 
- 
-        public static TreeNodeViewModel CreateFileTreeRoot(ITreeNode node, IOnNodeSelected listener)
-        {
-            var tree =  new TreeNodeViewModel(node,listener);
-            tree.NodeSelected = tree.SiblingViews.First();
 
-            return tree;
-        }
-
-        private TreeNodeViewModel selectedNode; 
-        public TreeNodeViewModel NodeSelected { get => selectedNode; set { selectedNode = value; DoClick(selectedNode);  SetPropertyChanged(); } }
+        private ITreeNode selectedNode; 
+        public ITreeNode NodeSelected { get => selectedNode; set { selectedNode = value; DoClick(selectedNode);  SetPropertyChanged(); } }
         public List<ITreeNode> History;
 
         private ITreeNode node;
@@ -70,7 +63,8 @@ namespace HexView.Viewmodel
             SiblingViews.Clear();
             Node = node;
             foreach (var child in node.Children)
-                SiblingViews.Add(new TreeNodeViewModel(child,_selectedListener));
+                SiblingViews.Add(new FileTreeNode(child.Name,this.Node));
+                //SiblingViews.Add(new FileTreeNode(child,_selectedListener));
 
         }
  
@@ -118,14 +112,13 @@ namespace HexView.Viewmodel
         }
 
 
-        private void DoClick(TreeNodeViewModel node)
+        private void DoClick(ITreeNode node)
         {
             if (_selectedListener != null)
-                _selectedListener.onSelected(node.Node,this); 
-
+                _selectedListener.onSelected(node,this); 
         }
 
-        public ObservableCollection<TreeNodeViewModel> SiblingViews
+        public ObservableCollection<ITreeNode> SiblingViews
         {
             get
             {
@@ -157,28 +150,27 @@ namespace HexView.Viewmodel
         {
             isLoading = true;
 
-            Task<List<TreeNodeViewModel>> task = GetSiblingAsync();
-            var list = new List<TreeNodeViewModel>();
+            Task<List<ITreeNode>> task = GetSiblingAsync();
+            var list = new List<ITreeNode>();
             list = await task;
             IsLoaded = true;
 
             isLoading = false; 
-            SiblingViews = new ObservableCollection<TreeNodeViewModel>(list);
+            SiblingViews = new ObservableCollection<ITreeNode>(list);
             IsEmpty = SiblingViews.Any();
         }
 
-        private async Task<List<TreeNodeViewModel>> GetSiblingAsync()
+        private async Task<List<ITreeNode>> GetSiblingAsync()
         {
-            var list = new List<TreeNodeViewModel>();
-            foreach (var view in Node.Children)
-                list.Add(new TreeNodeViewModel(view, this._selectedListener));
+            var list = _loader.LoadSiblings(Node);
 
             return list;
         }
 
 
  
-        private ObservableCollection<TreeNodeViewModel> _siblingViews;
+        private ObservableCollection<ITreeNode> _siblingViews;
         private List<ITreeNode> _siblings;
+        private ITreeLoader _loader;
     }
 }

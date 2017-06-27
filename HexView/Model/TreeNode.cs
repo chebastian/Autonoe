@@ -72,7 +72,8 @@ namespace HexView.Model
                 Name = Path.GetFileName(rootDirectory);
 
             Parent = parent;
-            children = null; 
+            children = null;
+            HasChildren = Directory.Exists(root);
         }
 
         //public FileTreeNode(String root)
@@ -132,10 +133,10 @@ namespace HexView.Model
         public ITreeNode Parent { get => parent; set { parent = value; SetPropertyChanged(); } }
     }
 
-        public interface ITreeNode
+    public interface ITreeNode
     {
         ITreeNode Parent { get; set; }
-        String Name { get; set; } 
+        String Name { get; set; }
         List<ITreeNode> Children { get; set; }
         bool HasChildren { get; set; }
     }

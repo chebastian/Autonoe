@@ -68,6 +68,7 @@
     <Compile Include="Viewmodel\HexMatrixViewModel.cs" />
     <Compile Include="Interface\ICellProvider.cs" />
     <Compile Include="Interface\IEventSubscriber.cs" />
+    <Compile Include="Viewmodel\ITreeLoader.cs" />
     <Compile Include="Viewmodel\TreeNodeStack.cs" />
     <Compile Include="Viewmodel\TreeNodeViewModel.cs" />
     <Compile Include="Viewmodel\TreesStackViewModel.cs" />

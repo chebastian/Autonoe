@@ -14,12 +14,6 @@ namespace HexView.Viewmodel
 
         }
 
-        public FileTreeViewModel(ITreeNode node, IOnNodeSelected listener)
-            :base(node,listener)
-        {
- 
-        }
-
         private List<FileTreeNode> _files;
         public List<FileTreeNode> Files
         {
