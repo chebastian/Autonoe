@@ -29,7 +29,6 @@ namespace HexView.Viewmodel
         public TreeNodeViewModel(ITreeNode node, IOnNodeSelected listener)
         {
             _siblingViews = new ObservableCollection<TreeNodeViewModel>();
-            //_siblings = node.Children; 
             Node = node; 
             SiblingViews = new ObservableCollection<TreeNodeViewModel>();
             IsLoaded = false;
@@ -138,7 +137,7 @@ namespace HexView.Viewmodel
                         //    _siblingViews.Add(new TreeNodeViewModel(view, this._selectedListener));
                         //Task<List<TreeNodeViewModel>> task = GetChildrenAsync();
                         //var list = task;
-                        loadChildren();
+                        LoadSiblings();
 
                         IsEmpty = _siblingViews.Any();
                     } 
@@ -154,11 +153,11 @@ namespace HexView.Viewmodel
 
         public bool IsLoaded { get; private set; }
 
-        public async void loadChildren()
+        public async void LoadSiblings()
         {
             isLoading = true;
 
-            Task<List<TreeNodeViewModel>> task = GetChildrenAsync();
+            Task<List<TreeNodeViewModel>> task = GetSiblingAsync();
             var list = new List<TreeNodeViewModel>();
             list = await task;
             IsLoaded = true;
@@ -168,7 +167,7 @@ namespace HexView.Viewmodel
             IsEmpty = SiblingViews.Any();
         }
 
-        private async Task<List<TreeNodeViewModel>> GetChildrenAsync()
+        private async Task<List<TreeNodeViewModel>> GetSiblingAsync()
         {
             var list = new List<TreeNodeViewModel>();
             foreach (var view in Node.Children)
