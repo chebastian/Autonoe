@@ -63,13 +63,16 @@ namespace HexView
             _rownum = row;
             _rowsz = rowsz;
             Cells = new ObservableCollection<MatrixCell>();
-            RowNumber = new ObservableField<int>(_rownum);
+            RowNumber = new ObservableField<int>(_rownum); 
+            RowName = new ObservableField<string>(String.Format("{0}",RowNumber.Value.ToString("X4")));
+             
 
             for (var i = 0; i < rowsz; i++)
                 Cells.Add(new CellProxy(provider, (row * rowsz) + i)); 
         }
 
         public ObservableField<int> RowNumber { get; set; }
+        public ObservableField<String> RowName { get; set; }
 
         public ObservableCollection<MatrixCell> Cells
         {

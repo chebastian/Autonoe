@@ -22,6 +22,25 @@ namespace HexView
         private FileStream _stream;
         private ObservableCollection<MatrixCell> _data;
 
+
+        private int _selectedMatrixValue;
+
+        public int SelectedMatrixRow
+        {
+            get { return _selectedMatrixValue; }
+            set { _selectedMatrixValue = value;SetPropertyChanged(); }
+        } 
+
+        public ICommand OnNextClicked
+        {
+            get
+            {
+                return new MyCommandWrapper((x) => {
+                    SelectedMatrixRow = SelectedMatrixRow + 1;
+                });
+            }
+        }
+ 
         public ObservableField<int> LoadedRows { get; set; } = new ObservableField<int>(20);
         public ObservableField<int> RowsToLoad { get; set; } = new ObservableField<int>(100);
 

@@ -39,18 +39,21 @@
                 <TextBlock Text="{Binding FileSize}"
                        DockPanel.Dock="Top"
                        />
+            <Button Content="Next" Command="{Binding OnNextClicked}" />
             <ListView 
                 DockPanel.Dock="Top"
                 VirtualizingPanel.IsVirtualizing="True"
                 VirtualizingPanel.CacheLength="20"
+                SelectedIndex="{Binding SelectedMatrixRow,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                 ItemsSource="{Binding Matrix,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                 >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>
                             <Label 
+                                FontFamily="Consolas"
                                 DockPanel.Dock="Left"
-                                Content="{Binding RowNumber.Value}" 
+                                Content="{Binding RowName.Value}" 
                                 />
                             <ListView 
                                 DockPanel.Dock="Left"
